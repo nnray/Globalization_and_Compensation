@@ -1,0 +1,15 @@
+---
+title: '626'
+author: "Nicholas Ray"
+date: "1/26/2023"
+output: pdf_document
+---
+```{r Libraries}
+library(here); library(tidyverse)
+```
+```{r Data}
+cmp<-read_csv(here("CMP.zip"))
+```
+```{r Cleaning}
+#cmp<-
+```
