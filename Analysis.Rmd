@@ -4,12 +4,22 @@ author: "Nicholas Ray"
 date: "1/26/2023"
 output: pdf_document
 ---
-```{r Libraries}
+```{r Libraries, message=FALSE, warning=FALSE}
 library(here); library(tidyverse)
 ```
-```{r Data}
+```{r Data, message=FALSE, warning=FALSE}
 cmp<-read_csv(here("CMP.zip"))
 ```
 ```{r Cleaning}
-#cmp<-
+cmp<-cmp %>%
+  select(country,countryname,date,party,partyname,parfam,absseat,totseats,per109,per406,per601_2,rile) %>%
+  filter(date > "197999") %>%
+  group_by(country,date) %>%
+  mutate(mean_rile=mean(rile))
+cmp$nat<-ifelse(cmp$parfam=="70",1,0)
+```
+I need to find some way to assess the variation between countries whose political elite have responded to alleged dissatisfaction with globalization and those who have not responded (with new, nationalist parties emerging). Ideally would be looking fo.
+```{r Plot}
+rile<-ggplot(data=cmp, mapping = aes(x=date,y=mean_rile,group=country))+geom_line(aes(group = country))
+nat<-ggplot(data=cmp, mapping = aes(x=date,y=nat,group=country))+geom_col(aes(group=country))
 ```
