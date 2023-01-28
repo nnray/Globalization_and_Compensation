@@ -13,13 +13,16 @@ cmp<-read_csv(here("CMP.zip"))
 ```{r Cleaning}
 #per109:internationalism_negative, per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
 cmp2 <- cmp %>%
-  select(countryname,date,partyname,pervote,per109,per406,per608,per601) %>%
+  select(countryname,date,partyname,parfam,pervote,per109,per406,per608,per601) %>%
   filter(date>"197999") %>%
   group_by(countryname,partyname) %>%
-  mutate(x=sd(pervote)) %>% #the std dev of the vote share of each party in a country
-  drop_na() %>%
-  group_by(countryname) %>%
-  mutate(y=mean(x)) %>% #the average std dev of party vote share in a country
-  group_by(countryname) %>%
-  mutate(z=(mean(per109+per406+per608+per601)/(y))) #the sum of "nationalist" platforms in ... divided by the average std dev of party vote share in a country
+  mutate(x=sd(pervote)) %>% #the std dev of the vote share of each party in a country (over the entire time period)
+  drop_na() %>% #seems that some parties didn't run twice, thus no std dev
+  group_by(countryname,date) %>%
+  mutate(y=mean(x)) %>% #average std dev of party share of all parties in all elections in a country; or use slice_max, where it'd be the highest std dev of vote share for the most volatile party in each country
+  group_by(countryname,date) %>%
+  mutate(z=sum(per109+per406+per608+per601))
+cmp3<-cmp2%>% #the sum of "nationalist" platforms in a country-election
+  group_by(countryname,date) %>%
+  summarise(countryname,date,y,z)
 ```
