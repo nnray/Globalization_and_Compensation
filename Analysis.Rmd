@@ -11,16 +11,15 @@ library(here); library(tidyverse)
 cmp<-read_csv(here("CMP.zip"))
 ```
 ```{r Cleaning}
-cmp<-cmp %>%
-  select(country,countryname,date,party,partyname,parfam,absseat,totseats,per109,per406,per608,per601,rile) %>% #109:internationalism_negative, 406:protectionism_positive,608:multiculturalism_negative,601:national_...
-  filter(date > "197999")
-cmp$nat<-ifelse(cmp$parfam=="70",1,0)
-cmp_simple<-cmp %>%
-  group_by(countryname,date) %>%
-  summarise(mean_rile=mean(rile),totnat=sum(nat))
-```
-I need to find some way to assess the variation between countries whose political elite have responded to alleged dissatisfaction with globalization and those who have not responded (with new, nationalist parties emerging).
-```{r Plot}
-rile<-ggplot(data=cmp, mapping = aes(x=date,y=mean_rile,group=country))+geom_line(aes(group = country))
-nat<-ggplot(data=cmp, mapping = aes(x=date,y=nat,group=country))+geom_col(aes(group=country))
+#per109:internationalism_negative, per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
+cmp2 <- cmp %>%
+  select(countryname,date,partyname,pervote,per109,per406,per608,per601) %>%
+  filter(date>"197999") %>%
+  group_by(countryname,partyname) %>%
+  mutate(x=sd(pervote)) %>% #the std dev of the vote share of each party in a country
+  drop_na() %>%
+  group_by(countryname) %>%
+  mutate(y=mean(x)) %>% #the average std dev of party vote share in a country
+  group_by(countryname) %>%
+  mutate(z=(mean(per109+per406+per608+per601)/(y))) #the sum of "nationalist" platforms in ... divided by the average std dev of party vote share in a country
 ```
