@@ -11,18 +11,18 @@ library(here); library(tidyverse)
 cmp<-read_csv(here("CMP.zip"))
 ```
 ```{r Cleaning}
-#per109:internationalism_negative, per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
+#per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
 cmp2 <- cmp %>%
   filter(date>"197912" & date<"202101") %>%
-  group_by(countryname,date) %>%
-  summarise(nat_sum=sum(per109+per406+per608+per601)) #the sum of "nationalist" platforms in a country-election, some measure of incumbent response
-cmp3<- cmp2 %>%
+  group_by(countryname,partyname) %>%
+  summarise(anti=mean(per109+per608),vote=mean(pervote),parfam=mean(parfam))
+cmp3 <- cmp2
+cmp3$lg_anti <- ifelse(cmp3$anti>1 & cmp3$vote>10,1,0)
+cmp3$lg_anti_natpar <- ifelse(cmp3$anti>1 & cmp3$vote>20 & cmp3$parfam==70,1,0)
+cmp3<-cmp3 %>%
+  drop_na() %>%
   group_by(countryname) %>%
-  mutate(earliest_date=198001) %>%
-  select(countryname,earliest_date) %>%
-  distinct() %>%
-  expand(date=earliest_date:202012,earliest_date) %>%
-  select(-earliest_date)
-cmp_fin<- cmp3 %>%
-  left_join(cmp2,by=c("countryname","date"))
+  summarise(lg_anti=sum(lg_anti),lg_anti_natpar=sum(lg_anti_natpar))
 ```
+
+May be able to infer that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists
