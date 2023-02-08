@@ -13,16 +13,23 @@ cmp<-read_csv(here("CMP.zip"))
 ```{r Cleaning}
 #per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
 cmp2 <- cmp %>%
-  filter(date>"197912" & date<"202101") %>%
   group_by(countryname,partyname) %>%
-  summarise(anti=mean(per109+per608),vote=mean(pervote),parfam=mean(parfam))
+  summarise(anti=round(mean(per109+per608),1),vote=round(mean(pervote),1),parfam=mean(parfam),date=edate) %>%
+  mutate(date=gsub('../../','',date),date=as.numeric(date))
 cmp3 <- cmp2
 cmp3$lg_anti <- ifelse(cmp3$anti>1 & cmp3$vote>10,1,0)
-cmp3$lg_anti_natpar <- ifelse(cmp3$anti>1 & cmp3$vote>20 & cmp3$parfam==70,1,0)
+cmp3$lg_anti_natpar <- ifelse(cmp3$anti>1 & cmp3$vote>10 & cmp3$parfam==70,1,0)
 cmp3<-cmp3 %>%
   drop_na() %>%
-  group_by(countryname) %>%
+  group_by(countryname,partyname) %>%
   summarise(lg_anti=sum(lg_anti),lg_anti_natpar=sum(lg_anti_natpar))
 ```
 
-May be able to infer that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists
+May be able to argue that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists.
+
+Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties have changed in political power over the years. Can also include graph for measure of globalization...
+```{r Austria}
+austria<- cmp %>%
+  filter(countryname=="Austria") #%>%
+  #ggplot(aes())
+```
