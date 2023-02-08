@@ -11,25 +11,29 @@ library(here); library(tidyverse)
 cmp<-read_csv(here("CMP.zip"))
 ```
 ```{r Cleaning}
+cmp<-cmp %>%
+  mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
+  select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod)
 #per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
-cmp2 <- cmp %>%
+cmp2 <- cmp %>% #building lg_anti
+  filter(date>1989 & date<2021) %>%
   group_by(countryname,partyname) %>%
-  summarise(anti=round(mean(per109+per608),1),vote=round(mean(pervote),1),parfam=mean(parfam),date=edate) %>%
-  mutate(date=gsub('../../','',date),date=as.numeric(date))
-cmp3 <- cmp2
-cmp3$lg_anti <- ifelse(cmp3$anti>1 & cmp3$vote>10,1,0)
-cmp3$lg_anti_natpar <- ifelse(cmp3$anti>1 & cmp3$vote>10 & cmp3$parfam==70,1,0)
-cmp3<-cmp3 %>%
-  drop_na() %>%
-  group_by(countryname,partyname) %>%
+  summarise(anti=round(mean(per109+per608),1),vote=round(mean(pervote),1),parfam=mean(parfam)) %>%
+  mutate(lg_anti=ifelse(anti>1 & vote>10,1,0),lg_anti_natpar=ifelse(anti>1 & vote>10 & parfam==70,1,0))
+cmp3<-cmp2 %>% #cmp4 but with only countries with lg_anti and their party names (allows us to see what parties in cmp4)
+  filter(lg_anti==1)
+cmp4<-cmp2 %>% #most condensed info, possibly table for paper
+  group_by(countryname) %>%
   summarise(lg_anti=sum(lg_anti),lg_anti_natpar=sum(lg_anti_natpar))
 ```
 
 May be able to argue that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists.
 
 Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties have changed in political power over the years. Can also include graph for measure of globalization...
+
 ```{r Austria}
-austria<- cmp %>%
-  filter(countryname=="Austria") #%>%
-  #ggplot(aes())
+cmp %>%
+  filter(countryname=="Belgium",partyname=="New Flemish Alliance") %>%
+  ggplot(aes(x=date,y=pervote)) +
+  geom_line()
 ```
