@@ -31,9 +31,17 @@ May be able to argue that if `lg_anti` is 0, then incumbent political system has
 
 Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties have changed in political power over the years. Can also include graph for measure of globalization...
 
-```{r Austria}
-cmp %>%
-  filter(countryname=="Belgium",partyname=="New Flemish Alliance") %>%
-  ggplot(aes(x=date,y=pervote)) +
-  geom_line()
+Really trying to look at how these two items that are supposed to measure anti-globalization politics (per109, per608) changes over time, along with how an objective measure of globalization has changed over time. Then want to see if "incumbents" responded to globalization or if others did. Austria is a great example, where it seems that the Austrian Freedom Party championed anti-globalist issues after already being prominent in the parliament. Hence, this incumbent system adapted to, or even tried to appease the losers of, globalization. 
+
+```{r Graphs}
+graph<-function(country,party){
+  title<-c(country, party)
+  cmp %>%
+  filter(countryname==country,partyname==party) %>%
+  ggplot(aes(x=date)) +
+    geom_line(aes(y=(per109+per608),color="anti")) +
+    geom_line(aes(y=(pervote),color="vote")) +
+    labs(title = paste0(c(title), collapse = ", "))
+}
+graph('Austria','Austrian Freedom Party')
 ```
