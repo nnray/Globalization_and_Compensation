@@ -65,20 +65,25 @@ parties<-function(country){
 }
 #austria: example of country where established party became anti-globalist as trade increased (1)
 parties('Austria')
-graph('Austria','Austrian Freedom Party',10000)
+graph('Austria','Austrian Freedom Party',10000) #(1)
+graph('Austria','Austrian People’s Party',10000) #(1)
 #belgium: really not to much growth in anti-globalization (0)
 parties('Belgium')
 graph('Belgium','New Flemish Alliance',10000)
 graph('Belgium','Christian Democratic and Flemish',10000)
 #Bosnia-Herzegovina: growth in anti-globalization both from established parties (1)
 parties('Bosnia-Herzegovina')
-graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000)
-graph('Bosnia-Herzegovina','Serbian Democratic Party',1000)
+graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000) #(1)
+graph('Bosnia-Herzegovina','Serbian Democratic Party',1000) #(1)
 #Bulgaria: false positive maybe (0)
 parties('Bulgaria')
 graph('Bulgaria',"Coalition of Bulgarian Socialist Party, Bulgarian Agrarian People’s Union - Alexandar Stambolijski and Political Club 'Ekoglasnost'",1000)
 #Czech Republic: false alarm (0)
 graph('Czech Republic','Left Bloc',1000)
-#denmark: could be an example of party becoming established after becoming anti-globalist
-graph('Denmark','Danish People’s Party',10000)
-```
+#denmark: could be an example of party becoming established after becoming anti-globalist (2) and established becoming anti-globalist (1)
+graph('Denmark','Danish People’s Party',10000) #(2)
+graph('Denmark','Liberals',10000) #(1)
+graph('Denmark','Social Democratic Party',10000) #(1)
+#estonia
+graph('Estonia',"Conservative People's Party of Estonia",1000)
+  ```
