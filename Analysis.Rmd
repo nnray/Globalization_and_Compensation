@@ -45,14 +45,14 @@ Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties
 Really trying to look at how these two items that are supposed to measure anti-globalization politics (per109, per608) changes over time, along with how an objective measure of globalization has changed over time. Then want to see if "incumbents" responded to globalization or if others did. Austria is a great example, where it seems that the Austrian Freedom Party championed anti-globalist issues after already being prominent in the parliament. Hence, this incumbent system adapted to, or even tried to appease the losers of, globalization. 
 
 ```{r Graphs}
-graph<-function(country,party){
+graph<-function(country,party,scale){
   title<-c(country, party)
   data %>%
   filter(countryname==country,partyname==party) %>%
   ggplot(aes(x=date)) +
     geom_line(aes(y=(per109+per608),color="anti")) +
     geom_line(aes(y=(pervote),color="vote")) +
-    geom_line(aes(y=((exports/1000)),color="exports")) +
+    geom_line(aes(y=((exports/scale)),color="exports")) +
     labs(title = paste0(c(title), collapse = ", "))
 }
 parties<-function(country){
@@ -63,23 +63,22 @@ parties<-function(country){
     mutate(z=ifelse(y>5,1,0)) %>%
     filter(z==1)
 }
-#austria
+#austria: example of country where established party became anti-globalist as trade increased (1)
 parties('Austria')
-graph('Austria','Austrian Freedom Party')
-graph('Austria','Austrian People’s Party')
-#belgium
+graph('Austria','Austrian Freedom Party',10000)
+#belgium: really not to much growth in anti-globalization (0)
 parties('Belgium')
-graph('Belgium','Christian Democratic and Flemish')
-#canada no anti-globalist response?
-parties('Canada')
-graph('Canada','New Democratic Party')
-#portugal no anti-globalist response?
-parties('Portugal')
-graph('Portugal','Social Democratic Party')
-#spain no gloablist response?
-parties('Spain')
-graph('Spain',"People's Party")
-#south africa
-parties('South Africa')
-graph('South Africa','Democratic Alliance')
+graph('Belgium','New Flemish Alliance',10000)
+graph('Belgium','Christian Democratic and Flemish',10000)
+#Bosnia-Herzegovina: growth in anti-globalization both from established parties (1)
+parties('Bosnia-Herzegovina')
+graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000)
+graph('Bosnia-Herzegovina','Serbian Democratic Party',1000)
+#Bulgaria: false positive maybe (0)
+parties('Bulgaria')
+graph('Bulgaria',"Coalition of Bulgarian Socialist Party, Bulgarian Agrarian People’s Union - Alexandar Stambolijski and Political Club 'Ekoglasnost'",1000)
+#Czech Republic: false alarm (0)
+graph('Czech Republic','Left Bloc',1000)
+#denmark: could be an example of party becoming established after becoming anti-globalist
+graph('Denmark','Danish People’s Party',10000)
 ```
