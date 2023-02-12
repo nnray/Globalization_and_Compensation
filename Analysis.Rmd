@@ -86,4 +86,4 @@ graph('Denmark','Liberals',10000) #(1)
 graph('Denmark','Social Democratic Party',10000) #(1)
 #estonia
 graph('Estonia',"Conservative People's Party of Estonia",1000)
-  ```
+```
