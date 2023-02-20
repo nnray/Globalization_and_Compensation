@@ -44,16 +44,16 @@ Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties
 
 Really trying to look at how these two items that are supposed to measure anti-globalization politics (per109, per608) changes over time, along with how an objective measure of globalization has changed over time. Then want to see if "incumbents" responded to globalization or if others did. Austria is a great example, where it seems that the Austrian Freedom Party championed anti-globalist issues after already being prominent in the parliament. Hence, this incumbent system adapted to, or even tried to appease the losers of, globalization. 
 
-```{r Graphs}
-graph<-function(country,party,scale){
+```{r Functions}
+graph<-function(country,party,scale){ #scale unused unless graphing exports too
   title<-c(country, party)
   data %>%
   filter(countryname==country,partyname==party) %>%
   ggplot(aes(x=date)) +
-    geom_line(aes(y=(per109+per608),color="anti")) +
-    geom_line(aes(y=(pervote),color="vote")) +
-    geom_line(aes(y=((exports/scale)),color="exports")) +
-    labs(title = paste0(c(title), collapse = ", "))
+    geom_line(aes(y=(per109+per608),color="Anti-Globalist Platform")) +
+    geom_line(aes(y=(pervote),color="Vote Percentage")) +
+    #geom_line(aes(y=((exports/scale)),color="exports"))
+    labs(title = paste0(c(title), collapse = ", "),x="Year",y="")
 }
 parties<-function(country){
   cmp %>%
@@ -63,27 +63,94 @@ parties<-function(country){
     mutate(z=ifelse(y>5,1,0)) %>%
     filter(z==1)
 }
-#austria: example of country where established party became anti-globalist as trade increased (1)
-parties('Austria')
-graph('Austria','Austrian Freedom Party',10000) #(1)
-graph('Austria','Austrian People’s Party',10000) #(1)
-#belgium: really not to much growth in anti-globalization (0)
-parties('Belgium')
-graph('Belgium','New Flemish Alliance',10000)
-graph('Belgium','Christian Democratic and Flemish',10000)
-#Bosnia-Herzegovina: growth in anti-globalization both from established parties (1)
-parties('Bosnia-Herzegovina')
-graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000) #(1)
-graph('Bosnia-Herzegovina','Serbian Democratic Party',1000) #(1)
-#Bulgaria: false positive maybe (0)
-parties('Bulgaria')
-graph('Bulgaria',"Coalition of Bulgarian Socialist Party, Bulgarian Agrarian People’s Union - Alexandar Stambolijski and Political Club 'Ekoglasnost'",1000)
-#Czech Republic: false alarm (0)
-graph('Czech Republic','Left Bloc',1000)
-#denmark: could be an example of party becoming established after becoming anti-globalist (2) and established becoming anti-globalist (1)
-graph('Denmark','Danish People’s Party',10000) #(2)
-graph('Denmark','Liberals',10000) #(1)
-graph('Denmark','Social Democratic Party',10000) #(1)
-#estonia
-graph('Estonia',"Conservative People's Party of Estonia",1000)
 ```
+```{r Graphs}
+#rule should be if "Anti-Globalist Platform" was non-zero when they crossed 10% vote threshold
+#examples of "incumbents" becoming anti-globalist (assumingly to appease losers) (case 1)
+c1.1<-graph("Austria","Austrian Freedom Party", 10000)
+c1.2<-graph("Austria","Austrian People’s Party", 10000)
+c1.3<-graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000)
+c1.4<-graph('Bosnia-Herzegovina','Serbian Democratic Party',1000)
+c1.5<-graph('Denmark','Liberals',10000)
+c1.6<-graph('Denmark','Social Democratic Party',10000)
+c1.7<-graph("Switzerland","Swiss People’s Party",10000) #could be 1 or 2...
+c1.8<-graph("Finland","Finnish Centre",1) #could be 1 or 2 #competition?
+c1.9<-graph("France","Union for a Popular Movement",1) #competition?
+c1.9<-graph("Germany","Christian Democratic Union/Christian Social Union",1)
+c1.10<-graph("Luxembourg","Christian Social People’s Party",1)
+c1.11<-graph("United States","Republican Party")
+#
+#examples of "far-right" entering (assumingly because incumbents have yet to appease losers) (case 2)
+c2.1<-graph('Denmark','Danish People’s Party',10000)
+c2.2<-graph("Sweden","Sweden Democrats",10000)
+c2.3<-graph("Norway","Progress Party",10000) #could be 1 or 2...
+c2.4<-graph("Mexico","Democratic Revolutionary Party",100000)
+c2.5<-graph("Netherlands","Party of Freedom",100000)
+c2.6<-graph("Netherlands","People’s Party for Freedom and Democracy",1)
+c2.7<-graph("Finland","True Finns",1) #competition?
+c2.8<-graph("France","National Front",1) #competition
+c2.9<-graph("Hungary","Movement for a Better Hungary",1)
+c2.10<-graph("Israel","Change",1)
+c2.11<-graph("Italy","National Alliance",1)
+c2.12<-graph("Japan","Japan Restoration Party",1)
+c2.13<-graph("Romania","Greater Romania Party")
+c2.14<-graph("Slovenia","Social-Democratic Party of Slovenia")
+#
+#countries where no anti-globalist party has surfaced
+#every other democratic country... Canada, etc.
+```
+```{r Plots,fig.height= 10, fig.width= 10}
+library(cowplot)
+#case1
+case1 <- plot_grid(
+  c1.1 + theme(legend.position="none"),
+  c1.2 + theme(legend.position="none"),
+  c1.3 + theme(legend.position="none"),
+  c1.4 + theme(legend.position="none"),
+  c1.5 + theme(legend.position="none"),
+  c1.6 + theme(legend.position="none"),
+  c1.7 + theme(legend.position="none"),
+  c1.8 + theme(legend.position="none"),
+  c1.9 + theme(legend.position="none"),
+  c1.10 + theme(legend.position="none"),
+  c1.11 + theme(legend.position="none"),
+  align = 'vh',
+  #hjust = -1,
+  ncol = 3
+)
+legend1 <- get_legend(
+  c1.1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+one<-plot_grid(case1,legend1, ncol = 1, rel_heights = c(1, .1))
+#
+#case2
+#
+case2 <- plot_grid(
+  c2.1 + theme(legend.position="none"),
+  c2.2 + theme(legend.position="none"),
+  c2.3 + theme(legend.position="none"),
+  c2.4 + theme(legend.position="none"),
+  c2.5 + theme(legend.position="none"),
+  c2.6 + theme(legend.position="none"),
+  c2.7 + theme(legend.position="none"),
+  c2.8 + theme(legend.position="none"),
+  c2.9 + theme(legend.position="none"),
+  c2.10 + theme(legend.position="none"),
+  c2.11 + theme(legend.position="none"),
+  c2.12 + theme(legend.position="none"),
+  c2.13 + theme(legend.position="none"),
+  c2.14 + theme(legend.position="none"),
+  align = 'vh',
+  #hjust = -1,
+  ncol = 3
+)
+legend2 <- get_legend(
+  c2.1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+two<-plot_grid(case2,legend2, ncol = 1, rel_heights = c(1, .1))
+```
+
