@@ -4,18 +4,38 @@ author: "Nicholas Ray"
 date: "1/26/2023"
 output: pdf_document
 ---
-```{r Libraries, message=FALSE, warning=FALSE}
-library(here); library(readxl); library(tidyverse)
+```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
+library(here);library(readxl);library(cowplot);library(tidyverse)
 ```
-```{r Data, message=FALSE, warning=FALSE}
-cmp<-read_csv(here("CMP.zip"))
-wto<-read_xlsx(here("WtoData_20230208175246.xlsx"),skip = 1)
+```{r figures,message=FALSE,warning=FALSE,include=FALSE}
+cmp<-read_csv(
+  here("data","platforms","CMP.zip") #party platforms
+  )
+wto<-read_xlsx(
+  here("data","elections","Wtodata_20230208175246.xlsx"), #voting for figures
+  skip = 1
+  )
+elections<-read.csv(
+  unzip(here("data","elections","es_data-v41.zip"),"es_data-v4_1.csv")
+  )
+gdp<-read.csv(
+  unzip(here("data","gdp","UNdata_Export_20221013_234232609.zip"))
+)
+inequality<-read_xlsx(
+  here("data","inequality","WID_Data_05052023-194249.xlsx")
+)
 ```
-```{r Cleaning}
+```{r cleaning}
+################################################################################
+#for figures
 cmp<-cmp %>%
   mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
   select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod)
 #per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
+cmp5 <- cmp %>% #building lg_anti
+  filter(date>1989 & date<2021) %>%
+  group_by(countryname,partyname) %>%
+  mutate(anti=(per109+per608)) #used for mean, sd of "anti"
 cmp2 <- cmp %>% #building lg_anti
   filter(date>1989 & date<2021) %>%
   group_by(countryname,partyname) %>%
@@ -34,8 +54,18 @@ wto<-wto %>%
   select(-`Partner Economy`,-`Product/Sector`) %>%
   rename(countryname=`Reporting Economy`) %>%
   mutate(date=as.numeric(date))
-data<-cmp %>%
+figures<-cmp %>%
   left_join(wto,by=c("countryname","date"))
+################################################################################
+#data
+cmp5<-cmp5 %>%
+  rename(country=countryname,date=year) %>%
+  select(country,year,anti)
+elections<-elections %>%
+  select(country,year,enep)
+inequality<- inequality %>%
+  pivot_longer(2:243,names_to = "country",values_to = "top")
+#inequality$country<-str_remove(inequality$country,"^\\S* ")
 ```
 
 May be able to argue that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists.
@@ -47,7 +77,7 @@ Really trying to look at how these two items that are supposed to measure anti-g
 ```{r Functions}
 graph<-function(country,party,scale){ #scale unused unless graphing exports too
   title<-c(country, party)
-  data %>%
+  figures %>%
   filter(countryname==country,partyname==party) %>%
   ggplot(aes(x=date)) +
     geom_line(aes(y=(per109+per608),color="Anti-Globalist Platform")) +
@@ -100,7 +130,6 @@ c2.14<-graph("Slovenia","Social-Democratic Party of Slovenia")
 #every other democratic country... Canada, etc.
 ```
 ```{r Plots,fig.height= 10, fig.width= 10}
-library(cowplot)
 #case1
 case1 <- plot_grid(
   c1.1 + theme(legend.position="none"),
