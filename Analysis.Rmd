@@ -16,6 +16,10 @@ cmp<-cmp %>%
   mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
   select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod)
 #per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
+cmp5 <- cmp %>% #building lg_anti
+  filter(date>1989 & date<2021) %>%
+  group_by(countryname,partyname) %>%
+  mutate(anti=(per109+per608)) #used for mean, sd of "anti"
 cmp2 <- cmp %>% #building lg_anti
   filter(date>1989 & date<2021) %>%
   group_by(countryname,partyname) %>%
