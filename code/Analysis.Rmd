@@ -26,43 +26,24 @@ inequality<-read_xlsx(
 )
 ```
 ```{r cleaning}
+figures<-cmp #for figures later
 ################################################################################
-#for figures
+#platforms
 cmp<-cmp %>%
+  group_by(countryname,partyname) %>%
+  mutate(anti=(per109+per608)) %>%
+  ungroup() %>%
   mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
-  select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod)
-#per109:internationalism_negative,per406:protectionism_positive,per608:multiculturalism_negative,per601:national_...
-cmp5 <- cmp %>% #building lg_anti
-  filter(date>1989 & date<2021) %>%
-  group_by(countryname,partyname) %>%
-  mutate(anti=(per109+per608)) #used for mean, sd of "anti"
-cmp2 <- cmp %>% #building lg_anti
-  filter(date>1989 & date<2021) %>%
-  group_by(countryname,partyname) %>%
-  summarise(anti=round(mean(per109+per608),1),vote=round(mean(pervote),1),parfam=mean(parfam)) %>%
-  mutate(lg_anti=ifelse(anti>1 & vote>10,1,0),lg_anti_natpar=ifelse(anti>1 & vote>10 & parfam==70,1,0))
-cmp3<-cmp2 %>% #cmp4 but with only countries with lg_anti and their party names (allows us to see what parties in cmp4)
-  filter(lg_anti==1)
-cmp4<-cmp2 %>%
-  drop_na() %>%#most condensed info, possibly table for paper
-  group_by(countryname) %>%
-  summarise(lg_anti=sum(lg_anti),lg_anti_natpar=sum(lg_anti_natpar))
-#wto
-wto<-wto %>%
-  filter(`Product/Sector`=='SI3_AGG - TO - Total merchandise') %>%
-  pivot_longer("1979":"2021",values_to = "exports",names_to = "date") %>%
-  select(-`Partner Economy`,-`Product/Sector`) %>%
-  rename(countryname=`Reporting Economy`) %>%
-  mutate(date=as.numeric(date))
-figures<-cmp %>%
-  left_join(wto,by=c("countryname","date"))
+  select(countryname,date,anti) %>%
+  rename(country=countryname,year=date) %>%
+  filter(year>1989 & year<2021)
 ################################################################################
-#data
-cmp5<-cmp5 %>%
-  rename(country=countryname,date=year) %>%
-  select(country,year,anti)
+#threat from new parties
 elections<-elections %>%
-  select(country,year,enep)
+  select(country,year,enep) %>%
+  filter(year>1989 & year<2021)
+################################################################################
+#inequality
 inequality<- inequality %>%
   pivot_longer(2:243,names_to = "country",values_to = "top")
 #inequality$country<-str_remove(inequality$country,"^\\S* ")
@@ -74,7 +55,20 @@ Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties
 
 Really trying to look at how these two items that are supposed to measure anti-globalization politics (per109, per608) changes over time, along with how an objective measure of globalization has changed over time. Then want to see if "incumbents" responded to globalization or if others did. Austria is a great example, where it seems that the Austrian Freedom Party championed anti-globalist issues after already being prominent in the parliament. Hence, this incumbent system adapted to, or even tried to appease the losers of, globalization. 
 
-```{r Functions}
+```{r figures,eval=FALSE, fig.height=10, fig.width=, include=FALSE}
+#vote-share
+wto<-wto %>%
+  filter(`Product/Sector`=='SI3_AGG - TO - Total merchandise') %>%
+  pivot_longer("1979":"2021",values_to = "exports",names_to = "date") %>%
+  select(-`Partner Economy`,-`Product/Sector`) %>%
+  rename(countryname=`Reporting Economy`) %>%
+  mutate(date=as.numeric(date))
+#platforms
+figures<-figures %>%
+  mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
+  select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod) %>%
+  left_join(wto,by=c("countryname","date"))
+#functions to make figures
 graph<-function(country,party,scale){ #scale unused unless graphing exports too
   title<-c(country, party)
   figures %>%
@@ -93,10 +87,7 @@ parties<-function(country){
     mutate(z=ifelse(y>5,1,0)) %>%
     filter(z==1)
 }
-```
-```{r Graphs}
-#rule should be if "Anti-Globalist Platform" was non-zero when they crossed 10% vote threshold
-#examples of "incumbents" becoming anti-globalist (assumingly to appease losers) (case 1)
+#case 1
 c1.1<-graph("Austria","Austrian Freedom Party", 10000)
 c1.2<-graph("Austria","Austrian People’s Party", 10000)
 c1.3<-graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000)
@@ -109,28 +100,6 @@ c1.9<-graph("France","Union for a Popular Movement",1) #competition?
 c1.9<-graph("Germany","Christian Democratic Union/Christian Social Union",1)
 c1.10<-graph("Luxembourg","Christian Social People’s Party",1)
 c1.11<-graph("United States","Republican Party")
-#
-#examples of "far-right" entering (assumingly because incumbents have yet to appease losers) (case 2)
-c2.1<-graph('Denmark','Danish People’s Party',10000)
-c2.2<-graph("Sweden","Sweden Democrats",10000)
-c2.3<-graph("Norway","Progress Party",10000) #could be 1 or 2...
-c2.4<-graph("Mexico","Democratic Revolutionary Party",100000)
-c2.5<-graph("Netherlands","Party of Freedom",100000)
-c2.6<-graph("Netherlands","People’s Party for Freedom and Democracy",1)
-c2.7<-graph("Finland","True Finns",1) #competition?
-c2.8<-graph("France","National Front",1) #competition
-c2.9<-graph("Hungary","Movement for a Better Hungary",1)
-c2.10<-graph("Israel","Change",1)
-c2.11<-graph("Italy","National Alliance",1)
-c2.12<-graph("Japan","Japan Restoration Party",1)
-c2.13<-graph("Romania","Greater Romania Party")
-c2.14<-graph("Slovenia","Social-Democratic Party of Slovenia")
-#
-#countries where no anti-globalist party has surfaced
-#every other democratic country... Canada, etc.
-```
-```{r Plots,fig.height= 10, fig.width= 10}
-#case1
 case1 <- plot_grid(
   c1.1 + theme(legend.position="none"),
   c1.2 + theme(legend.position="none"),
@@ -153,9 +122,21 @@ legend1 <- get_legend(
     theme(legend.position = "bottom")
 )
 one<-plot_grid(case1,legend1, ncol = 1, rel_heights = c(1, .1))
-#
-#case2
-#
+#case 2
+c2.1<-graph('Denmark','Danish People’s Party',10000)
+c2.2<-graph("Sweden","Sweden Democrats",10000)
+c2.3<-graph("Norway","Progress Party",10000) #could be 1 or 2...
+c2.4<-graph("Mexico","Democratic Revolutionary Party",100000)
+c2.5<-graph("Netherlands","Party of Freedom",100000)
+c2.6<-graph("Netherlands","People’s Party for Freedom and Democracy",1)
+c2.7<-graph("Finland","True Finns",1) #competition?
+c2.8<-graph("France","National Front",1) #competition
+c2.9<-graph("Hungary","Movement for a Better Hungary",1)
+c2.10<-graph("Israel","Change",1)
+c2.11<-graph("Italy","National Alliance",1)
+c2.12<-graph("Japan","Japan Restoration Party",1)
+c2.13<-graph("Romania","Greater Romania Party")
+c2.14<-graph("Slovenia","Social-Democratic Party of Slovenia")
 case2 <- plot_grid(
   c2.1 + theme(legend.position="none"),
   c2.2 + theme(legend.position="none"),
