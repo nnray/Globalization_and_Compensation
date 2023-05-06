@@ -5,9 +5,9 @@ date: "1/26/2023"
 output: pdf_document
 ---
 ```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
-library(here);library(readxl);library(cowplot);library(tidyverse)
+library(here);library(readxl);library(cowplot);library(zoo);library(tidyverse)
 ```
-```{r figures,message=FALSE,warning=FALSE,include=FALSE}
+```{r data,message=FALSE,warning=FALSE,include=FALSE}
 cmp<-read_csv(
   here("data","platforms","CMP.zip") #party platforms
   )
@@ -28,42 +28,90 @@ inequality<-read_xlsx(
 ```{r cleaning}
 figures<-cmp #for figures later
 ################################################################################
+#all countries with data
+countries<-c("Albania","Armenia","Australia","Austria","Belgium",
+             "Bosnia-Herzegovina","Bulgaria","Canada","Croatia","Czech Republic",
+             "Denmark","Estonia","Finland","France","Georgia","Germany","Greece",
+             "Hungary","Iceland","Ireland","Israel","Italy","Japan","Latvia",
+             "Lithuania","Luxembourg","Malta","Mexico","Moldova","Montenegro",
+             "Netherlands","New Zealand","North Macedonia","Norway","Poland",
+             "Portugal","Romania","Serbia","Slovakia","Slovenia","South Africa",
+             "South Korea","Spain","Sweden","Switzerland","Turkey","Ukraine",
+             "United Kingdom","United States")
+#no Azerbaijan, Belarus, Cyrpus in elections; deleted German Democratic Republic and Russia
+################################################################################
 #platforms
 cmp<-cmp %>%
   group_by(countryname,partyname) %>%
   mutate(anti=(per109+per608)) %>%
   ungroup() %>%
   mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
+  group_by(countryname,date) %>%
+  mutate(anti=mean(anti)) %>%
   select(countryname,date,anti) %>%
   rename(country=countryname,year=date) %>%
-  filter(year>1989 & year<2021)
+  filter(year>1989 & year<2021,country!="German Democratic Republic") %>%
+  distinct() %>%
+  subset(.,country %in% countries)
 ################################################################################
 #threat from new parties
 elections<-elections %>%
   select(country,year,enep) %>%
-  filter(year>1989 & year<2021)
+  filter(year>1989 & year<2021) %>%
+  drop_na() %>%
+  group_by(country,year) %>%
+  mutate(enep=mean(enep)) %>%
+  ungroup() %>%
+  distinct()
+elections["country"][elections["country"]=="Bosnia"]<-"Bosnia-Herzegovina"
+elections["country"][elections["country"]=="Macedonia"]<-"North Macedonia"
+elections["country"][elections["country"]=="Republic of Serbia"]<-"Serbia"
+elections["country"][elections["country"]=="United States of America"]<-"United States"
+elections<-subset(elections,country %in% countries)
 ################################################################################
 #inequality
-inequality<- inequality %>%
-  pivot_longer(2:243,names_to = "country",values_to = "top")
-#inequality$country<-str_remove(inequality$country,"^\\S* ")
+inequality<-inequality[,-11] #second South Africa variable
+inequality<-inequality %>%
+  pivot_longer(2:242,names_to = "country",values_to = "top") %>%
+  rename(year=Year) %>%
+  filter(year>1989&year<2021)
+inequality$country<-sub(".*?\n","",inequality$country)
+inequality$country<-sub("\n.*","",inequality$country)
+inequality["country"][inequality["country"]=="Bosnia and Herzegovina"]<-"Bosnia-Herzegovina"
+inequality["country"][inequality["country"]=="USA"]<-"United States"
+inequality["country"][inequality["country"]=="Korea"]<-"South Korea"
+inequality<-subset(inequality,country %in% countries)
+################################################################################
+gdp<-gdp %>%
+  filter(`Year` > "1989" & `Year` < "2021") %>%
+  select(`Country.or.Area`,`Year`,`Value`) %>%
+  rename(country=`Country.or.Area`,year=Year,gdp=Value)
+gdp["country"][gdp["country"]=="United Kingdom of Great Britain and Northern Ireland"]<-"United Kingdom"
+gdp["country"][gdp["country"]=="Republic of North Macedonia"]<-"North Macedonia"
+gdp["country"][gdp["country"]=="Republic of Moldova"]<-"Moldova"
+gdp["country"][gdp["country"]=="Bosnia and Herzegovina"]<-"Bosnia-Herzegovina"
+gdp["country"][gdp["country"]=="Czechia"]<-"Czech Republic"
+gdp["country"][gdp["country"]=="Republic of Korea"]<-"South Korea"
+gdp<-subset(gdp,country %in% countries)
+################################################################################
+#making dataset
+data<-full_join(gdp,inequality,by=c("country","year")) %>%
+  full_join(.,cmp,by=c("country","year")) %>%
+  full_join(.,elections,by=c("country","year"))
+#probably makes the most sense to manually impute the missing values as the most recent value
+data<-na.locf(data,fromLast = TRUE,na.rm = FALSE)
 ```
 
-May be able to argue that if `lg_anti` is 0, then incumbent political system has failed to respond to anti-globalist sentiment IF it exists.
-
-Deeper case studies: Looking at Austria, and how it's 2 "anti-globalist" parties have changed in political power over the years. Can also include graph for measure of globalization...
-
-Really trying to look at how these two items that are supposed to measure anti-globalization politics (per109, per608) changes over time, along with how an objective measure of globalization has changed over time. Then want to see if "incumbents" responded to globalization or if others did. Austria is a great example, where it seems that the Austrian Freedom Party championed anti-globalist issues after already being prominent in the parliament. Hence, this incumbent system adapted to, or even tried to appease the losers of, globalization. 
-
+<!-- Building figures for figure 1 and 2 in paper. -->
 ```{r figures,eval=FALSE, fig.height=10, fig.width=, include=FALSE}
-#vote-share
+#exports
 wto<-wto %>%
   filter(`Product/Sector`=='SI3_AGG - TO - Total merchandise') %>%
   pivot_longer("1979":"2021",values_to = "exports",names_to = "date") %>%
   select(-`Partner Economy`,-`Product/Sector`) %>%
   rename(countryname=`Reporting Economy`) %>%
   mutate(date=as.numeric(date))
-#platforms
+#platforms and vote-share
 figures<-figures %>%
   mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
   select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod) %>%
@@ -163,4 +211,3 @@ legend2 <- get_legend(
 )
 two<-plot_grid(case2,legend2, ncol = 1, rel_heights = c(1, .1))
 ```
-
