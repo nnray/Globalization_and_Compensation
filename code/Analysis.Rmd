@@ -1,11 +1,12 @@
 ---
-title: '626'
+title: 'Globalization and Compensation'
 author: "Nicholas Ray"
-date: "1/26/2023"
+date: "05/07/2023"
 output: pdf_document
 ---
 ```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
-library(here);library(readxl);library(cowplot);library(zoo);library(tidyverse)
+library(here);library(readxl);library(cowplot);library(zoo);library(plm);
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(tidyverse)
 ```
 ```{r data,message=FALSE,warning=FALSE,include=FALSE}
 cmp<-read_csv(
@@ -100,6 +101,7 @@ data<-full_join(gdp,inequality,by=c("country","year")) %>%
   full_join(.,elections,by=c("country","year"))
 #probably makes the most sense to manually impute the missing values as the most recent value
 data<-na.locf(data,fromLast = TRUE,na.rm = FALSE)
+data["anti"][is.na(data["anti"])] <-.1295
 ```
 
 <!-- Building figures for figure 1 and 2 in paper. -->
@@ -210,4 +212,40 @@ legend2 <- get_legend(
     theme(legend.position = "bottom")
 )
 two<-plot_grid(case2,legend2, ncol = 1, rel_heights = c(1, .1))
+```
+
+```{r analysis}
+data<-pdata.frame(data,index = c("country","year"))
+purtest(
+  object={
+    data %>%
+      select(country,year,gdp) %>%
+      drop_na() %>%
+      select(gdp)
+  },
+  #exo = "trend",
+  test = "invnormal"
+)
+data<-data %>%
+  ungroup() %>%
+  mutate(log_gdp=log(gdp))
+model1<-plm(anti~top+enep+gdp,data,effect = "twoways") #time effects from purtest, unit effects from plmtest
+pbgtest(model1) #serial correlation
+bptest(model1) #heteroskedasticity
+#library(GWPR.light)
+#GWPR.light::GWPR.moran.test(model1, w)
+model1.2<-lm(anti~top+enep+log_gdp+as.factor(year)+as.factor(country),data)
+pc<-pcse(model1.2,data$country,data$year) #final model
+summary(pc)
+data<-data %>%
+  ungroup() %>%
+  mutate(lag_anti=dplyr::lag(anti))
+model2<-plm(anti~lag_anti+top+enep+gdp,data,effect = "twoways")
+pbgtest(model2) #serial correlation
+bptest(model2) #heteroskedasticity
+#model2.2<-pdynmc(dat = data,varname.i = country,varname.t = year,include.dum = TRUE,
+#                 use.mc.diff=TRUE,use.mc.lev=FALSE,use.mc.nonlin=FALSE,
+#                 std.err="corrected",varname.y = "anti",
+#                 varname.reg.fur=c("top","enep","gdp"),lagTerms.reg.fur=c(1,1,1))
+stargazer(model1.2)
 ```
