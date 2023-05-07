@@ -1,2 +1,2 @@
-# 626-R_Code_and_Data
-R Code and data for POLS 626.
+# Paper files
+R Code, data, and .pdf copy of my working paper "Government and Compensation."
