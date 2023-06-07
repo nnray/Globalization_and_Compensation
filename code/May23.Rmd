@@ -1,0 +1,257 @@
+---
+title: 'Globalization and Compensation'
+author: "Nicholas Ray"
+date: "05/07/2023"
+output: pdf_document
+---
+```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
+library(here);library(readxl);library(cowplot);library(zoo);library(plm);
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(tidyverse)
+```
+```{r data,message=FALSE,warning=FALSE,include=FALSE}
+cmp<-read_csv(
+  here("data","platforms","CMP.zip") #party platforms
+  )
+wto<-read_xlsx(
+  here("data","elections","Wtodata_20230208175246.xlsx"), #voting for figures
+  skip = 1
+  )
+elections<-read.csv(
+  unzip(here("data","elections","es_data-v41.zip"),"es_data-v4_1.csv")
+  )
+gdp<-read.csv(
+  unzip(here("data","gdp","UNdata_Export_20221013_234232609.zip"))
+  )
+inequality<-read_xlsx(
+  here("data","inequality","WID_Data_05052023-194249.xlsx")
+  )
+```
+```{r cleaning}
+figures<-cmp #for figures later
+################################################################################
+#all countries with data
+countries<-c("Albania","Armenia","Australia","Austria","Belgium",
+             "Bosnia-Herzegovina","Bulgaria","Canada","Croatia","Czech Republic",
+             "Denmark","Estonia","Finland","France","Georgia","Germany","Greece",
+             "Hungary","Iceland","Ireland","Israel","Italy","Japan","Latvia",
+             "Lithuania","Luxembourg","Malta","Mexico","Moldova","Montenegro",
+             "Netherlands","New Zealand","North Macedonia","Norway","Poland",
+             "Portugal","Romania","Serbia","Slovakia","Slovenia","South Africa",
+             "South Korea","Spain","Sweden","Switzerland","Turkey","Ukraine",
+             "United Kingdom","United States")
+#no Azerbaijan, Belarus, Cyrpus in elections; deleted German Democratic Republic and Russia
+################################################################################
+#welfare
+welfare<-welfare %>%
+  rename(country=Country,year=Time) %>%
+  filter(Variable==`Current recipients (all), of those`,
+         Programme.Name==``)
+################################################################################
+#platforms
+cmp<-cmp %>%
+  group_by(countryname,partyname) %>%
+  mutate(anti=(per109+per608)) %>%
+  ungroup() %>%
+  mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
+  group_by(countryname,date) %>%
+  mutate(anti=mean(anti)) %>%
+  select(countryname,date,anti) %>%
+  rename(country=countryname,year=date) %>%
+  filter(year>1989 & year<2021,country!="German Democratic Republic") %>%
+  distinct() %>%
+  subset(.,country %in% countries)
+################################################################################
+#threat from new parties
+elections<-elections %>%
+  select(country,year,enep) %>%
+  filter(year>1989 & year<2021) %>%
+  drop_na() %>%
+  group_by(country,year) %>%
+  mutate(enep=mean(enep)) %>%
+  ungroup() %>%
+  distinct()
+elections["country"][elections["country"]=="Bosnia"]<-"Bosnia-Herzegovina"
+elections["country"][elections["country"]=="Macedonia"]<-"North Macedonia"
+elections["country"][elections["country"]=="Republic of Serbia"]<-"Serbia"
+elections["country"][elections["country"]=="United States of America"]<-"United States"
+elections<-subset(elections,country %in% countries)
+################################################################################
+#inequality
+inequality<-inequality[,-11] #second South Africa variable
+inequality<-inequality %>%
+  pivot_longer(2:242,names_to = "country",values_to = "top") %>%
+  rename(year=Year) %>%
+  filter(year>1989&year<2021)
+inequality$country<-sub(".*?\n","",inequality$country)
+inequality$country<-sub("\n.*","",inequality$country)
+inequality["country"][inequality["country"]=="Bosnia and Herzegovina"]<-"Bosnia-Herzegovina"
+inequality["country"][inequality["country"]=="USA"]<-"United States"
+inequality["country"][inequality["country"]=="Korea"]<-"South Korea"
+inequality<-subset(inequality,country %in% countries)
+################################################################################
+gdp<-gdp %>%
+  filter(`Year` > "1989" & `Year` < "2021") %>%
+  select(`Country.or.Area`,`Year`,`Value`) %>%
+  rename(country=`Country.or.Area`,year=Year,gdp=Value)
+gdp["country"][gdp["country"]=="United Kingdom of Great Britain and Northern Ireland"]<-"United Kingdom"
+gdp["country"][gdp["country"]=="Republic of North Macedonia"]<-"North Macedonia"
+gdp["country"][gdp["country"]=="Republic of Moldova"]<-"Moldova"
+gdp["country"][gdp["country"]=="Bosnia and Herzegovina"]<-"Bosnia-Herzegovina"
+gdp["country"][gdp["country"]=="Czechia"]<-"Czech Republic"
+gdp["country"][gdp["country"]=="Republic of Korea"]<-"South Korea"
+gdp<-subset(gdp,country %in% countries)
+################################################################################
+#making dataset
+data<-full_join(gdp,inequality,by=c("country","year")) %>%
+  full_join(.,cmp,by=c("country","year")) %>%
+  full_join(.,elections,by=c("country","year"))
+#probably makes the most sense to manually impute the missing values as the most recent value
+data<-na.locf(data,fromLast = TRUE,na.rm = FALSE)
+data["anti"][is.na(data["anti"])] <-.1295
+```
+
+<!-- Building figures for figure 1 and 2 in paper. -->
+```{r figures,eval=FALSE, fig.height=10, fig.width=, include=FALSE}
+#exports
+wto<-wto %>%
+  filter(`Product/Sector`=='SI3_AGG - TO - Total merchandise') %>%
+  pivot_longer("1979":"2021",values_to = "exports",names_to = "date") %>%
+  select(-`Partner Economy`,-`Product/Sector`) %>%
+  rename(countryname=`Reporting Economy`) %>%
+  mutate(date=as.numeric(date))
+#platforms and vote-share
+figures<-figures %>%
+  mutate(date=gsub('../../','',edate),date=as.numeric(date)) %>%
+  select(-country,-oecdmember,-eumember,-edate,-party,-partyabbrev,-coderid,-manual,-coderyear,-testresult,-testeditsim,-voteest,-presvote,-progtype,-datasetorigin,-corpusversion,-total,-peruncod) %>%
+  left_join(wto,by=c("countryname","date"))
+#functions to make figures
+graph<-function(country,party,scale){ #scale unused unless graphing exports too
+  title<-c(country, party)
+  figures %>%
+  filter(countryname==country,partyname==party) %>%
+  ggplot(aes(x=date)) +
+    geom_line(aes(y=(per109+per608),color="Anti-Globalist Platform")) +
+    geom_line(aes(y=(pervote),color="Vote Percentage")) +
+    #geom_line(aes(y=((exports/scale)),color="exports"))
+    labs(title = paste0(c(title), collapse = ", "),x="Year",y="")
+}
+parties<-function(country){
+  cmp %>%
+    filter(date>1979,countryname==country) %>%
+    group_by(partyname) %>%
+    summarise(y=mean(pervote)) %>%
+    mutate(z=ifelse(y>5,1,0)) %>%
+    filter(z==1)
+}
+#case 1
+c1.1<-graph("Austria","Austrian Freedom Party", 10000)
+c1.2<-graph("Austria","Austrian People’s Party", 10000)
+c1.3<-graph('Bosnia-Herzegovina','Alliance of Independent Social Democrats',1000)
+c1.4<-graph('Bosnia-Herzegovina','Serbian Democratic Party',1000)
+c1.5<-graph('Denmark','Liberals',10000)
+c1.6<-graph('Denmark','Social Democratic Party',10000)
+c1.7<-graph("Switzerland","Swiss People’s Party",10000) #could be 1 or 2...
+c1.8<-graph("Finland","Finnish Centre",1) #could be 1 or 2 #competition?
+c1.9<-graph("France","Union for a Popular Movement",1) #competition?
+c1.9<-graph("Germany","Christian Democratic Union/Christian Social Union",1)
+c1.10<-graph("Luxembourg","Christian Social People’s Party",1)
+c1.11<-graph("United States","Republican Party")
+case1 <- plot_grid(
+  c1.1 + theme(legend.position="none"),
+  c1.2 + theme(legend.position="none"),
+  c1.3 + theme(legend.position="none"),
+  c1.4 + theme(legend.position="none"),
+  c1.5 + theme(legend.position="none"),
+  c1.6 + theme(legend.position="none"),
+  c1.7 + theme(legend.position="none"),
+  c1.8 + theme(legend.position="none"),
+  c1.9 + theme(legend.position="none"),
+  c1.10 + theme(legend.position="none"),
+  c1.11 + theme(legend.position="none"),
+  align = 'vh',
+  #hjust = -1,
+  ncol = 3
+)
+legend1 <- get_legend(
+  c1.1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+one<-plot_grid(case1,legend1, ncol = 1, rel_heights = c(1, .1))
+#case 2
+c2.1<-graph('Denmark','Danish People’s Party',10000)
+c2.2<-graph("Sweden","Sweden Democrats",10000)
+c2.3<-graph("Norway","Progress Party",10000) #could be 1 or 2...
+c2.4<-graph("Mexico","Democratic Revolutionary Party",100000)
+c2.5<-graph("Netherlands","Party of Freedom",100000)
+c2.6<-graph("Netherlands","People’s Party for Freedom and Democracy",1)
+c2.7<-graph("Finland","True Finns",1) #competition?
+c2.8<-graph("France","National Front",1) #competition
+c2.9<-graph("Hungary","Movement for a Better Hungary",1)
+c2.10<-graph("Israel","Change",1)
+c2.11<-graph("Italy","National Alliance",1)
+c2.12<-graph("Japan","Japan Restoration Party",1)
+c2.13<-graph("Romania","Greater Romania Party")
+c2.14<-graph("Slovenia","Social-Democratic Party of Slovenia")
+case2 <- plot_grid(
+  c2.1 + theme(legend.position="none"),
+  c2.2 + theme(legend.position="none"),
+  c2.3 + theme(legend.position="none"),
+  c2.4 + theme(legend.position="none"),
+  c2.5 + theme(legend.position="none"),
+  c2.6 + theme(legend.position="none"),
+  c2.7 + theme(legend.position="none"),
+  c2.8 + theme(legend.position="none"),
+  c2.9 + theme(legend.position="none"),
+  c2.10 + theme(legend.position="none"),
+  c2.11 + theme(legend.position="none"),
+  c2.12 + theme(legend.position="none"),
+  c2.13 + theme(legend.position="none"),
+  c2.14 + theme(legend.position="none"),
+  align = 'vh',
+  #hjust = -1,
+  ncol = 3
+)
+legend2 <- get_legend(
+  c2.1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+two<-plot_grid(case2,legend2, ncol = 1, rel_heights = c(1, .1))
+```
+
+```{r analysis}
+data<-pdata.frame(data,index = c("country","year"))
+purtest(
+  object={
+    data %>%
+      select(country,year,gdp) %>%
+      drop_na() %>%
+      select(gdp)
+  },
+  #exo = "trend",
+  test = "invnormal"
+)
+data<-data %>%
+  ungroup() %>%
+  mutate(log_gdp=log(gdp))
+model1<-plm(anti~top+enep+gdp,data,effect = "twoways") #time effects from purtest, unit effects from plmtest
+pbgtest(model1) #serial correlation
+bptest(model1) #heteroskedasticity
+#library(GWPR.light)
+#GWPR.light::GWPR.moran.test(model1, w)
+model1.2<-lm(anti~top+enep+log_gdp+as.factor(year)+as.factor(country),data)
+pc<-pcse(model1.2,data$country,data$year) #final model
+summary(pc)
+data<-data %>%
+  ungroup() %>%
+  mutate(lag_anti=dplyr::lag(anti))
+model2<-plm(anti~lag_anti+top+enep+gdp,data,effect = "twoways")
+pbgtest(model2) #serial correlation
+bptest(model2) #heteroskedasticity
+#model2.2<-pdynmc(dat = data,varname.i = country,varname.t = year,include.dum = TRUE,
+#                 use.mc.diff=TRUE,use.mc.lev=FALSE,use.mc.nonlin=FALSE,
+#                 std.err="corrected",varname.y = "anti",
+#                 varname.reg.fur=c("top","enep","gdp"),lagTerms.reg.fur=c(1,1,1))
+stargazer(model1.2)
+```

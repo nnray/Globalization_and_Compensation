@@ -1,0 +1,19 @@
+---
+title: "Globalization and Compensation"
+author: "Nicholas Ray"
+date: "6/7/2023"
+output: html_document
+---
+```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
+library(here);library(readxl);library(cowplot);library(zoo);library(plm);
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(tidyverse)
+```
+```{r data,message=FALSE,warning=FALSE,include=FALSE}
+spending<-read.csv(
+  unzip(here("data","spending","SOCX_AGG_07062023154720173.zip"),
+        "SOCX_AGG_07062023154720173.csv")
+  )
+wages<-read_csv(
+  here("data","wages","DP_LIVE_07062023154746735.csv")
+  )
+```
