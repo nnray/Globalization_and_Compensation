@@ -1,19 +1,60 @@
 ---
 title: "Globalization and Compensation"
 author: "Nicholas Ray"
-date: "6/7/2023"
+date: "6/9/2023"
 output: html_document
 ---
 ```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
 library(here);library(readxl);library(cowplot);library(zoo);library(plm);
-library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(tidyverse)
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(Amelia);
+library(panelr);library(tidyverse)
 ```
 ```{r data,message=FALSE,warning=FALSE,include=FALSE}
 spending<-read.csv(
-  unzip(here("data","spending","SOCX_AGG_07062023154720173.zip"),
-        "SOCX_AGG_07062023154720173.csv")
+  here("data","spending","SOCX_AGG_07062023164135366.csv")
   )
 wages<-read_csv(
-  here("data","wages","DP_LIVE_07062023154746735.csv")
+  here("data","wages","DP_LIVE_07062023164354304.csv")
   )
+imports<-read_csv(
+  here("data","imports","DP_LIVE_10062023180219881.csv")
+  )
+```
+```{r cleaning}
+country_codes<-c("AUS","AUT","BEL","CAN","CZE","DEU","DNK","ESP","FIN","FRA","GBR",
+             "IRL","ISL","ITA","JPN","KOR","LUX","MEX","NLD","NZL","POL","PRT",
+             "SVK","USA") #based on the majority of available data for "spending", minus Norway and Sweden due
+#to "wages" lacking that data
+################################################################################
+# net total (public and private) social spending in percentage of GDP
+spending<-spending %>%
+  rename(country_code=COUNTRY,country=Country,year=Year,spending=Value) %>%
+  select(country_code,country,year,spending) %>%
+  subset(country_code %in% country_codes)
+#country<-spending %>%
+#  select(country) %>%
+#  as.vector()
+################################################################################
+# "low pay" wages, or the share of workers earning less than two-thirds of median earnings
+wages<-wages %>%
+  rename(country_code=LOCATION,year=TIME,wages=Value) %>%
+  select(country_code,year,wages) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+#annual imports as a percentage of GDP (proxy for economic globalization)
+imports<-imports %>%
+  rename(country_code=LOCATION,year=TIME,imports=Value) %>%
+  select(country_code,year,imports) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+data<-full_join(imports,spending,by=c("country_code","year")) %>%
+  full_join(.,wages,by=c("country_code","year"))
+data<-mutate(data,spending_need=spending/wages)
+```
+```{r figures}
+figure<-panel_data(data,id = country_code,wave = year) %>%
+  line_plot(spending_need,
+            overlay = FALSE,
+            add.mean = TRUE)
+figure2<-figure + geom_line(mapping=aes(y=log(imports))) #for imports too
 ```
