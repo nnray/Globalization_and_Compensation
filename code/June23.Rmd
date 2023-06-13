@@ -19,21 +19,30 @@ wages<-read_csv(
 imports<-read_csv(
   here("data","imports","DP_LIVE_10062023180219881.csv")
   )
+first_share<-read_excel(
+  here("data","income","API_SI.DST.FRST.10_DS2_en_excel_v2_5463321.xls"),
+  col_names=TRUE, skip=2
+  )
+second_share<-read_excel(
+  here("data","income","API_SI.DST.02ND.20_DS2_en_excel_v2_5463348.xls"),
+  col_names=TRUE, skip=2
+  )
+third_share<-read_excel(
+  here("data","income","API_SI.DST.03RD.20_DS2_en_excel_v2_5467057.xls"),
+  col_names=TRUE, skip=2
+  )
 ```
 ```{r cleaning}
 country_codes<-c("AUS","AUT","BEL","CAN","CZE","DEU","DNK","ESP","FIN","FRA","GBR",
              "IRL","ISL","ITA","JPN","KOR","LUX","MEX","NLD","NZL","POL","PRT",
-             "SVK","USA") #based on the majority of available data for "spending", minus Norway and Sweden due
-#to "wages" lacking that data
+             "SVK","USA") #based on the majority of available data for "spending", minus Norway
+# and Sweden due to "wages" lacking that data
 ################################################################################
 # net total (public and private) social spending in percentage of GDP
 spending<-spending %>%
   rename(country_code=COUNTRY,country=Country,year=Year,spending=Value) %>%
   select(country_code,country,year,spending) %>%
   subset(country_code %in% country_codes)
-#country<-spending %>%
-#  select(country) %>%
-#  as.vector()
 ################################################################################
 # "low pay" wages, or the share of workers earning less than two-thirds of median earnings
 wages<-wages %>%
@@ -41,11 +50,17 @@ wages<-wages %>%
   select(country_code,year,wages) %>%
   subset(country_code %in% country_codes)
 ################################################################################
-#annual imports as a percentage of GDP (proxy for economic globalization)
+# annual imports as a percentage of GDP (proxy for economic globalization)
 imports<-imports %>%
   rename(country_code=LOCATION,year=TIME,imports=Value) %>%
   select(country_code,year,imports) %>%
   subset(country_code %in% country_codes)
+################################################################################
+# income shares over time
+# to find the share of income for the lower half of the distribution: 1+2+(0.5*3) = lower ~50%
+# then subtract that from 50 to get the amount of compensation needed, in terms of national income
+# can then directly compare it to social spending?
+# rename(country=`Data Source`,country_code=`World Development Indicators`,income=...3)
 ################################################################################
 data<-full_join(imports,spending,by=c("country_code","year")) %>%
   full_join(.,wages,by=c("country_code","year"))
