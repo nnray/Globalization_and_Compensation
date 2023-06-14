@@ -19,15 +19,15 @@ wages<-read_csv(
 imports<-read_csv(
   here("data","imports","DP_LIVE_10062023180219881.csv")
   )
-first_share<-read_excel(
-  here("data","income","API_SI.DST.FRST.10_DS2_en_excel_v2_5463321.xls"),
+quintile1<-read_excel(
+  here("data","income","API_SI.DST.FRST.20_DS2_en_excel_v2_5455995.xls"),
   col_names=TRUE, skip=2
   )
-second_share<-read_excel(
+quintile2<-read_excel(
   here("data","income","API_SI.DST.02ND.20_DS2_en_excel_v2_5463348.xls"),
   col_names=TRUE, skip=2
   )
-third_share<-read_excel(
+quintile3<-read_excel(
   here("data","income","API_SI.DST.03RD.20_DS2_en_excel_v2_5467057.xls"),
   col_names=TRUE, skip=2
   )
@@ -40,8 +40,8 @@ country_codes<-c("AUS","AUT","BEL","CAN","CZE","DEU","DNK","ESP","FIN","FRA","GB
 ################################################################################
 # net total (public and private) social spending in percentage of GDP
 spending<-spending %>%
-  rename(country_code=COUNTRY,country=Country,year=Year,spending=Value) %>%
-  select(country_code,country,year,spending) %>%
+  rename(country_code=COUNTRY,year=Year,spending=Value) %>%
+  select(country_code,year,spending) %>%
   subset(country_code %in% country_codes)
 ################################################################################
 # "low pay" wages, or the share of workers earning less than two-thirds of median earnings
@@ -56,20 +56,46 @@ imports<-imports %>%
   select(country_code,year,imports) %>%
   subset(country_code %in% country_codes)
 ################################################################################
-# income shares over time
+# income quintiles over time (1 being lowest 20% and so on)
 # to find the share of income for the lower half of the distribution: 1+2+(0.5*3) = lower ~50%
 # then subtract that from 50 to get the amount of compensation needed, in terms of national income
 # can then directly compare it to social spending?
-# rename(country=`Data Source`,country_code=`World Development Indicators`,income=...3)
+quintile1<-quintile1 %>%
+  pivot_longer(5:67,names_to = "year",values_to = "quintile1") %>%
+  rename(country=`Country Name`,country_code=`Country Code`) %>%
+  select(country,country_code,year,quintile1) %>%
+  mutate(year=as.numeric(year)) %>%
+  filter(year > "1994") %>%
+  subset(country_code %in% country_codes)
+quintile2<-quintile2 %>%
+  pivot_longer(5:67,names_to = "year",values_to = "quintile2") %>%
+  rename(country_code=`Country Code`) %>%
+  select(country_code,year,quintile2) %>%
+  mutate(year=as.numeric(year)) %>%
+  filter(year > "1994") %>%
+  subset(country_code %in% country_codes)
+quintile3<-quintile3 %>%
+  pivot_longer(5:67,names_to = "year",values_to = "quintile3") %>%
+  rename(country_code=`Country Code`) %>%
+  select(country_code,year,quintile3) %>%
+  mutate(year=as.numeric(year)) %>%
+  filter(year > "1994") %>%
+  subset(country_code %in% country_codes)
 ################################################################################
-data<-full_join(imports,spending,by=c("country_code","year")) %>%
-  full_join(.,wages,by=c("country_code","year"))
-data<-mutate(data,spending_need=spending/wages)
+data<-full_join(imports,quintile1,by=c("country_code","year")) %>%
+  full_join(.,quintile2,by=c("country_code","year")) %>%
+  full_join(.,quintile3,by=c("country_code","year")) %>%
+  full_join(.,wages,by=c("country_code","year")) %>%
+  full_join(.,spending,by=c("country_code","year"))
+data<-data %>%
+  group_by(country,year) %>%
+  mutate(spending_need=spending/wages,income=quintile1+quintile2+quintile3,
+         income2=60-income)
 ```
 ```{r figures}
 figure<-panel_data(data,id = country_code,wave = year) %>%
-  line_plot(spending_need,
+  line_plot(spending,
             overlay = FALSE,
             add.mean = TRUE)
-figure2<-figure + geom_line(mapping=aes(y=log(imports))) #for imports too
+figure2<-figure + geom_line(mapping=aes(y=income2))
 ```
