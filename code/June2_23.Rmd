@@ -1,0 +1,185 @@
+---
+title: "Globalization and Compensation"
+author: "Nicholas Ray"
+date: "6/16/2023"
+output: html_document
+---
+```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
+library(here);library(readxl);library(cowplot);library(zoo);library(plm);
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(Amelia);
+library(panelr);library(tidyverse)
+```
+```{r data,message=FALSE,warning=FALSE,include=FALSE}
+spending<-read.csv(
+  unzip(here("data","spending","SOCX.zip"),"SOCX_AGG_16062023181903485.csv")
+  )
+imports<-read_csv(
+  here("data","imports","DP_LIVE_16062023180545012.csv")
+  )
+average_mhi<-read_xlsx(
+  here("data","income","dart-table_mean_1686923456066.xlsx")
+  )
+households<-read_csv(
+  here("data","income","IDD_16062023154218231.csv")
+  )
+gdp<-read_xls(
+  here("data","gdp","ppp_US_since_1990",
+       "API_NY.GDP.MKTP.PP.KD_DS2_en_excel_v2_5455539.xls"),
+  col_names=TRUE, skip=2
+  )
+lorenz_80<-read_xlsx(
+  here("data","income","lorenz","80.xlsx")
+  )
+lorenz_81<-read_xlsx(
+  here("data","income","lorenz","81.xlsx")
+  )
+lorenz_82<-read_xlsx(
+  here("data","income","lorenz","82.xlsx")
+  )
+lorenz_83<-read_xlsx(
+  here("data","income","lorenz","83.xlsx")
+  )
+lorenz_84<-read_xlsx(
+  here("data","income","lorenz","84.xlsx")
+  )
+lorenz_85<-read_xlsx(
+  here("data","income","lorenz","85.xlsx")
+  )
+lorenz_86<-read_xlsx(
+  here("data","income","lorenz","86.xlsx")
+  )
+lorenz_87<-read_xlsx(
+  here("data","income","lorenz","87.xlsx")
+  )
+lorenz_88<-read_xlsx(
+  here("data","income","lorenz","88.xlsx")
+  )
+lorenz_89<-read_xlsx(
+  here("data","income","lorenz","89.xlsx")
+  )
+lorenz_90<-read_xlsx(
+  here("data","income","lorenz","90.xlsx")
+  )
+lorenz_91<-read_xlsx(
+  here("data","income","lorenz","91.xlsx")
+  )
+lorenz_92<-read_xlsx(
+  here("data","income","lorenz","92.xlsx")
+  )
+lorenz_93<-read_xlsx(
+  here("data","income","lorenz","93.xlsx")
+  )
+lorenz_94<-read_xlsx(
+  here("data","income","lorenz","94.xlsx")
+  )
+lorenz_95<-read_xlsx(
+  here("data","income","lorenz","95.xlsx")
+  )
+lorenz_96<-read_xlsx(
+  here("data","income","lorenz","96.xlsx")
+  )
+lorenz_97<-read_xlsx(
+  here("data","income","lorenz","97.xlsx")
+  )
+lorenz_98<-read_xlsx(
+  here("data","income","lorenz","98.xlsx")
+  )
+lorenz_99<-read_xlsx(
+  here("data","income","lorenz","99.xlsx")
+  )
+lorenz_00<-read_xlsx(
+  here("data","income","lorenz","00.xlsx")
+  )
+lorenz_01<-read_xlsx(
+  here("data","income","lorenz","01.xlsx")
+  )
+lorenz_02<-read_xlsx(
+  here("data","income","lorenz","02.xlsx")
+  )
+lorenz_03<-read_xlsx(
+  here("data","income","lorenz","03.xlsx")
+  )
+lorenz_04<-read_xlsx(
+  here("data","income","lorenz","04.xlsx")
+  )
+lorenz_05<-read_xlsx(
+  here("data","income","lorenz","05.xlsx")
+  )
+lorenz_06<-read_xlsx(
+  here("data","income","lorenz","06.xlsx")
+  )
+lorenz_07<-read_xlsx(
+  here("data","income","lorenz","07.xlsx")
+  )
+lorenz_08<-read_xlsx(
+  here("data","income","lorenz","08.xlsx")
+  )
+lorenz_09<-read_xlsx(
+  here("data","income","lorenz","09.xlsx")
+  )
+lorenz_10<-read_xlsx(
+  here("data","income","lorenz","10.xlsx")
+  )
+lorenz_11<-read_xlsx(
+  here("data","income","lorenz","11.xlsx")
+  )
+lorenz_12<-read_xlsx(
+  here("data","income","lorenz","12.xlsx")
+  )
+lorenz_13<-read_xlsx(
+  here("data","income","lorenz","13.xlsx")
+  )
+lorenz_14<-read_xlsx(
+  here("data","income","lorenz","14.xlsx")
+  )
+lorenz_15<-read_xlsx(
+  here("data","income","lorenz","15.xlsx")
+  )
+lorenz_16<-read_xlsx(
+  here("data","income","lorenz","16.xlsx")
+  )
+lorenz_17<-read_xlsx(
+  here("data","income","lorenz","17.xlsx")
+  )
+lorenz_18<-read_xlsx(
+  here("data","income","lorenz","18.xlsx")
+  )
+lorenz_19<-read_xlsx(
+  here("data","income","lorenz","19.xlsx")
+  )
+lorenz_20<-read_xlsx(
+  here("data","income","lorenz","20.xlsx")
+  )
+```
+```{r cleaning}
+country_codes<-c("AUS","AUT","BEL","CAN","CZE","DEU","DNK","ESP","FIN","FRA","GBR",
+             "IRL","ISL","ITA","JPN","KOR","LUX","MEX","NLD","NOR","NZL","POL","PRT",
+             "SVK","SWE","USA") #based on the majority of available data for "spending"
+################################################################################
+# net total (public and private) social spending in percentage of GDP
+spending<-spending %>%
+  rename(country_code=COUNTRY,year=Year,spending=Value) %>%
+  select(country_code,year,spending) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+# annual imports as a percentage of GDP (proxy for economic globalization)
+imports<-imports %>%
+  rename(country_code=LOCATION,year=TIME,imports=Value) %>%
+  select(country_code,year,imports) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+# Lorenz curve cleaning (to extract share of income earned by the lower half of the population)
+################################################################################
+# GDP cleaning
+################################################################################
+# creating macro dataset and creating new variables
+#data<-full_join(,,by=c("country_code","year")) %>%
+#  full_join(.,,by=c("country_code","year"))
+```
+```{r figures}
+#figure<-panel_data(data,id = country_code,wave = year) %>%
+#  line_plot(,
+#            overlay = FALSE,
+#            add.mean = TRUE)
+#figure<-figure + geom_line(mapping=aes(y=))
+```
