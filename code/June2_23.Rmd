@@ -392,23 +392,36 @@ income<-income %>%
   mutate(year=as.numeric(year))
 ################################################################################
 households<-households %>%
-  filter(Measure=="Total number of households") %>%
+  filter(Measure=="Total number of households",
+         Methodology=="New income definition since 2012") %>%
   rename(country=Country,year=Year,households=Value) %>%
-  select(country,year,households) %>%
-  distinct()
-#households["Methodology"][households["Methodology"]=="Income definition until 2011" & households["Year"]>2011]
+  select(country,year,households)
 ################################################################################
 # creating macro dataset and creating new variables
 data<-gdp %>%
   left_join(.,lorenz,by=c("country","year")) %>%
   left_join(.,spending,by=c("country_code","year")) %>%
   left_join(.,income,by=c("country","year")) %>%
-  left_join(.,imports,by=c("country_code","year"))
+  left_join(.,imports,by=c("country_code","year")) %>%
+  left_join(.,households,by=c("country","year"))
+data<-data %>%
+  mutate(total_income=(income*households)*lorenz,
+         total_spending=spending*gdp,
+         total_income_diff=total_income-lag(total_income),
+         total_spending_diff=total_spending-lag(total_spending))
 ```
 ```{r figures}
-figure<-panel_data(data,id = country_code,wave = year) %>%
+figure1<-data %>%
+  panel_data(.,id = country_code,wave = year) %>%
   line_plot(lorenz,
             overlay = FALSE,
             add.mean = TRUE)
-figure<-figure + geom_line(mapping=aes(y=spending))
+figure1<-figure1 + geom_line(mapping=aes(y=spending))
+figure2<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id = country_code,wave = year) %>%
+  line_plot(total_income_diff, #take US out?
+            overlay = FALSE,
+            add.mean = TRUE)
+figure2<-figure2 + geom_line(mapping=aes(y=total_spending_diff))
 ```
