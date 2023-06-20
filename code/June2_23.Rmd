@@ -405,23 +405,28 @@ data<-gdp %>%
   left_join(.,imports,by=c("country_code","year")) %>%
   left_join(.,households,by=c("country","year"))
 data<-data %>%
-  mutate(total_income=(income*households)*lorenz,
-         total_spending=spending*gdp,
+  group_by(country,year) %>%
+  mutate(total_income=(income*households)*(lorenz*0.01),
+         total_spending=(spending*0.01)*gdp,
          total_income_diff=total_income-lag(total_income),
          total_spending_diff=total_spending-lag(total_spending))
 ```
 ```{r figures}
 figure1<-data %>%
-  panel_data(.,id = country_code,wave = year) %>%
+  panel_data(.,id = country,wave = year) %>%
   line_plot(lorenz,
             overlay = FALSE,
             add.mean = TRUE)
-figure1<-figure1 + geom_line(mapping=aes(y=spending))
-figure2<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id = country_code,wave = year) %>%
-  line_plot(total_income_diff, #take US out?
-            overlay = FALSE,
-            add.mean = TRUE)
-figure2<-figure2 + geom_line(mapping=aes(y=total_spending_diff))
+figure1<-figure1 + geom_line(mapping=aes(y=spending),size=0.5)
+figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
+                               method = "lm",formula = y~x,
+                               colour = "red", se = FALSE, size=0.4)
+figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
+#figure2<-data %>%
+#  filter(country != "United States") %>%
+#  panel_data(.,id = country_code,wave = year) %>%
+#  line_plot(total_income,
+#            overlay = FALSE,
+#            add.mean = TRUE)
+#figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
 ```
