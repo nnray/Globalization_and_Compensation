@@ -153,7 +153,7 @@ lorenz_20<-read_xlsx(
   here("data","income","lorenz","20.xlsx")
   )
 ################################################################################
-# Lorenz curve cleaning (to extract share of income earned by the lower half of the population)
+# Lorenz curve cleaning (to extract share of income earned by the lower _ of the population)
 lorenz_80<-lorenz_80 %>%
   select(countries,`50`) %>%
   rename(country=countries,lorenz=`50`) %>%
@@ -422,11 +422,11 @@ figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
                                method = "lm",formula = y~x,
                                colour = "red", se = FALSE, size=0.4)
 figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
-#figure2<-data %>%
-#  filter(country != "United States") %>%
-#  panel_data(.,id = country_code,wave = year) %>%
-#  line_plot(total_income,
-#            overlay = FALSE,
-#            add.mean = TRUE)
-#figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
+figure2<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id = country_code,wave = year) %>%
+  line_plot(total_income,
+            overlay = FALSE,
+            add.mean = TRUE)
+figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
 ```
