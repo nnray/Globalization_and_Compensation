@@ -430,3 +430,4 @@ figure2<-data %>%
             add.mean = TRUE)
 figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
 ```
+continue to think about measurement
