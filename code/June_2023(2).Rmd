@@ -407,9 +407,13 @@ data<-gdp %>%
 data<-data %>%
   group_by(country,year) %>%
   mutate(total_income=(income*households)*(lorenz*0.01),
-         total_spending=(spending*0.01)*gdp,
-         total_income_diff=total_income-lag(total_income),
-         total_spending_diff=total_spending-lag(total_spending))
+         total_spending=(spending*0.01)*gdp)
+data$total_spending_diff<-ifelse(
+  is.na(data$total_spending)==TRUE,NA,diff(data$total_spending)
+)
+data$total_income_diff<-ifelse(
+  is.na(data$total_income)==TRUE,NA,diff(data$total_income)
+)
 ```
 ```{r figures}
 figure1<-data %>%
@@ -429,5 +433,23 @@ figure2<-data %>%
             overlay = FALSE,
             add.mean = TRUE)
 figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
+figure3<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id=country,wave = year) %>%
+  line_plot(total_spending_diff,
+            overlay = FALSE,
+            add.mean = TRUE,
+            line.size = 0.5)
+figure3<-figure3 + geom_line(mapping=aes(y=total_income_diff),linewidth=0.5)
+figure3<-figure3 + geom_smooth(mapping=aes(y=total_income_diff,x=year),
+                               method = "lm",formula = y~x,
+                               colour = "red", se = FALSE, linewidth=0.4)
+figure4<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id=country,wave = year) %>%
+  line_plot(total_income_diff,
+            overlay = FALSE,
+            add.mean = TRUE,
+            line.size = 0.5)
 ```
-continue to think about measurement
+changes in real income do not capture changes in unrealized income (i.e., loss). income for the lower half of the population have gone up over time, but how much higher should it be had income growth been equal? That difference is the amount that must be compared to social spending. you need to 1) figure out who has experienced the least income growth, 2) how much income they have had, and 3) how much they would have had if growth been more equally distributed. Then, 4) find the difference between "expected" income (under equal growth) and "real" income. This number is what must be compensated.
