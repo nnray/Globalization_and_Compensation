@@ -453,3 +453,5 @@ figure4<-data %>%
             line.size = 0.5)
 ```
 changes in real income do not capture changes in unrealized income (i.e., loss). income for the lower half of the population have gone up over time, but how much higher should it be had income growth been equal? That difference is the amount that must be compared to social spending. you need to 1) figure out who has experienced the least income growth, 2) how much income they have had, and 3) how much they would have had if growth been more equally distributed. Then, 4) find the difference between "expected" income (under equal growth) and "real" income. This number is what must be compensated.
+
+One option would be to stop relying on aggregate or easy to collect data like from the LIS. Can look at the statistics bureaus of each country.
