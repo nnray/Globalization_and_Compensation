@@ -1,0 +1,903 @@
+"","country","lorenz","year"
+"1","Australia",NA,1980
+"2","Austria",NA,1980
+"3","Belgium",NA,1980
+"4","Czech Republic",NA,1980
+"5","Denmark",NA,1980
+"6","Finland",NA,1980
+"7","France",NA,1980
+"8","Germany",21.82,1980
+"9","Ireland",NA,1980
+"10","Italy",NA,1980
+"11","South Korea",NA,1980
+"12","Luxembourg",NA,1980
+"13","Mexico",NA,1980
+"14","Netherlands",NA,1980
+"15","Norway",24.63,1980
+"16","Poland",NA,1980
+"17","Russia",NA,1980
+"18","Slovakia",NA,1980
+"19","Spain",NA,1980
+"20","Switzerland",24.2,1980
+"21","United Kingdom",23.31,1980
+"22","United States",20.31,1980
+"23","Australia",NA,1981
+"24","Austria",NA,1981
+"25","Belgium",NA,1981
+"26","Czech Republic",NA,1981
+"27","Denmark",NA,1981
+"28","Finland",NA,1981
+"29","France",NA,1981
+"30","Germany",21.67,1981
+"31","Ireland",NA,1981
+"32","Italy",NA,1981
+"33","South Korea",NA,1981
+"34","Luxembourg",NA,1981
+"35","Mexico",NA,1981
+"36","Netherlands",18.73,1981
+"37","Norway",24.63,1981
+"38","Poland",NA,1981
+"39","Russia",NA,1981
+"40","Slovakia",NA,1981
+"41","Spain",NA,1981
+"42","Switzerland",24.2,1981
+"43","United Kingdom",21.56,1981
+"44","United States",19.79,1981
+"45","Australia",NA,1982
+"46","Austria",NA,1982
+"47","Belgium",NA,1982
+"48","Czech Republic",NA,1982
+"49","Denmark",NA,1982
+"50","Finland",NA,1982
+"51","France",NA,1982
+"52","Germany",21.67,1982
+"53","Ireland",NA,1982
+"54","Italy",NA,1982
+"55","South Korea",NA,1982
+"56","Luxembourg",NA,1982
+"57","Mexico",NA,1982
+"58","Netherlands",18.73,1982
+"59","Norway",NA,1982
+"60","Poland",NA,1982
+"61","Russia",NA,1982
+"62","Slovakia",NA,1982
+"63","Spain",NA,1982
+"64","Switzerland",24.2,1982
+"65","United Kingdom",19.92,1982
+"66","United States",18.96,1982
+"67","Australia",NA,1983
+"68","Austria",NA,1983
+"69","Belgium",NA,1983
+"70","Czech Republic",NA,1983
+"71","Denmark",NA,1983
+"72","Finland",NA,1983
+"73","France",NA,1983
+"74","Germany",21.67,1983
+"75","Ireland",NA,1983
+"76","Italy",NA,1983
+"77","South Korea",NA,1983
+"78","Luxembourg",NA,1983
+"79","Mexico",NA,1983
+"80","Netherlands",18.73,1983
+"81","Norway",NA,1983
+"82","Poland",NA,1983
+"83","Russia",NA,1983
+"84","Slovakia",NA,1983
+"85","Spain",NA,1983
+"86","Switzerland",24.2,1983
+"87","United Kingdom",19.92,1983
+"88","United States",18.61,1983
+"89","Australia",NA,1984
+"90","Austria",NA,1984
+"91","Belgium",NA,1984
+"92","Czech Republic",NA,1984
+"93","Denmark",NA,1984
+"94","Finland",NA,1984
+"95","France",NA,1984
+"96","Germany",19.8,1984
+"97","Ireland",NA,1984
+"98","Italy",NA,1984
+"99","South Korea",NA,1984
+"100","Luxembourg",NA,1984
+"101","Mexico",NA,1984
+"102","Netherlands",18.73,1984
+"103","Norway",25.47,1984
+"104","Poland",NA,1984
+"105","Russia",NA,1984
+"106","Slovakia",NA,1984
+"107","Spain",NA,1984
+"108","Switzerland",24.2,1984
+"109","United Kingdom",19.61,1984
+"110","United States",19.06,1984
+"111","Australia",NA,1985
+"112","Austria",NA,1985
+"113","Belgium",NA,1985
+"114","Czech Republic",NA,1985
+"115","Denmark",NA,1985
+"116","Finland",27.31,1985
+"117","France",NA,1985
+"118","Germany",19.8,1985
+"119","Ireland",14.91,1985
+"120","Italy",NA,1985
+"121","South Korea",NA,1985
+"122","Luxembourg",NA,1985
+"123","Mexico",NA,1985
+"124","Netherlands",19.3,1985
+"125","Norway",25.47,1985
+"126","Poland",NA,1985
+"127","Russia",NA,1985
+"128","Slovakia",NA,1985
+"129","Spain",NA,1985
+"130","Switzerland",NA,1985
+"131","United Kingdom",18.74,1985
+"132","United States",18.96,1985
+"133","Australia",NA,1986
+"134","Austria",NA,1986
+"135","Belgium",NA,1986
+"136","Czech Republic",NA,1986
+"137","Denmark",NA,1986
+"138","Finland",27.31,1986
+"139","France",NA,1986
+"140","Germany",20.48,1986
+"141","Ireland",14.91,1986
+"142","Italy",NA,1986
+"143","South Korea",NA,1986
+"144","Luxembourg",NA,1986
+"145","Mexico",NA,1986
+"146","Netherlands",19.3,1986
+"147","Norway",25.47,1986
+"148","Poland",NA,1986
+"149","Russia",NA,1986
+"150","Slovakia",NA,1986
+"151","Spain",NA,1986
+"152","Switzerland",NA,1986
+"153","United Kingdom",17.63,1986
+"154","United States",18.81,1986
+"155","Australia",20.18,1987
+"156","Austria",NA,1987
+"157","Belgium",NA,1987
+"158","Czech Republic",NA,1987
+"159","Denmark",NA,1987
+"160","Finland",27.31,1987
+"161","France",NA,1987
+"162","Germany",20.18,1987
+"163","Ireland",14.91,1987
+"164","Italy",NA,1987
+"165","South Korea",NA,1987
+"166","Luxembourg",NA,1987
+"167","Mexico",NA,1987
+"168","Netherlands",19.3,1987
+"169","Norway",25.47,1987
+"170","Poland",NA,1987
+"171","Russia",NA,1987
+"172","Slovakia",NA,1987
+"173","Spain",NA,1987
+"174","Switzerland",NA,1987
+"175","United Kingdom",17.63,1987
+"176","United States",19.04,1987
+"177","Australia",20.18,1988
+"178","Austria",NA,1988
+"179","Belgium",NA,1988
+"180","Czech Republic",NA,1988
+"181","Denmark",NA,1988
+"182","Finland",27.31,1988
+"183","France",NA,1988
+"184","Germany",20.13,1988
+"185","Ireland",14.91,1988
+"186","Italy",NA,1988
+"187","South Korea",NA,1988
+"188","Luxembourg",NA,1988
+"189","Mexico",NA,1988
+"190","Netherlands",19.3,1988
+"191","Norway",25.47,1988
+"192","Poland",NA,1988
+"193","Russia",NA,1988
+"194","Slovakia",NA,1988
+"195","Spain",NA,1988
+"196","Switzerland",NA,1988
+"197","United Kingdom",18.44,1988
+"198","United States",18.99,1988
+"199","Australia",20.18,1989
+"200","Austria",NA,1989
+"201","Belgium",NA,1989
+"202","Czech Republic",NA,1989
+"203","Denmark",NA,1989
+"204","Finland",27.07,1989
+"205","France",NA,1989
+"206","Germany",20.3,1989
+"207","Ireland",14.91,1989
+"208","Italy",NA,1989
+"209","South Korea",NA,1989
+"210","Luxembourg",NA,1989
+"211","Mexico",NA,1989
+"212","Netherlands",21.71,1989
+"213","Norway",24.08,1989
+"214","Poland",NA,1989
+"215","Russia",NA,1989
+"216","Slovakia",NA,1989
+"217","Spain",NA,1989
+"218","Switzerland",NA,1989
+"219","United Kingdom",18.72,1989
+"220","United States",18.97,1989
+"221","Australia",20.18,1990
+"222","Austria",NA,1990
+"223","Belgium",17.19,1990
+"224","Czech Republic",NA,1990
+"225","Denmark",NA,1990
+"226","Finland",27.07,1990
+"227","France",NA,1990
+"228","Germany",20.59,1990
+"229","Ireland",NA,1990
+"230","Italy",NA,1990
+"231","South Korea",NA,1990
+"232","Luxembourg",NA,1990
+"233","Mexico",NA,1990
+"234","Netherlands",21.71,1990
+"235","Norway",24.08,1990
+"236","Poland",NA,1990
+"237","Russia",NA,1990
+"238","Slovakia",NA,1990
+"239","Spain",NA,1990
+"240","Switzerland",24.45,1990
+"241","United Kingdom",18.08,1990
+"242","United States",19.01,1990
+"243","Australia",20.18,1991
+"244","Austria",NA,1991
+"245","Belgium",17.19,1991
+"246","Czech Republic",NA,1991
+"247","Denmark",NA,1991
+"248","Finland",27.07,1991
+"249","France",NA,1991
+"250","Germany",20.59,1991
+"251","Ireland",NA,1991
+"252","Italy",NA,1991
+"253","South Korea",NA,1991
+"254","Luxembourg",NA,1991
+"255","Mexico",NA,1991
+"256","Netherlands",21.71,1991
+"257","Norway",24.08,1991
+"258","Poland",NA,1991
+"259","Russia",NA,1991
+"260","Slovakia",NA,1991
+"261","Spain",NA,1991
+"262","Switzerland",24.45,1991
+"263","United Kingdom",18.08,1991
+"264","United States",19.01,1991
+"265","Australia",20.18,1992
+"266","Austria",NA,1992
+"267","Belgium",17.19,1992
+"268","Czech Republic",NA,1992
+"269","Denmark",NA,1992
+"270","Finland",27.07,1992
+"271","France",NA,1992
+"272","Germany",19.52,1992
+"273","Ireland",NA,1992
+"274","Italy",NA,1992
+"275","South Korea",NA,1992
+"276","Luxembourg",NA,1992
+"277","Mexico",NA,1992
+"278","Netherlands",21.71,1992
+"279","Norway",24.08,1992
+"280","Poland",NA,1992
+"281","Russia",NA,1992
+"282","Slovakia",NA,1992
+"283","Spain",NA,1992
+"284","Switzerland",24.45,1992
+"285","United Kingdom",17.57,1992
+"286","United States",18.5,1992
+"287","Australia",NA,1993
+"288","Austria",NA,1993
+"289","Belgium",17.19,1993
+"290","Czech Republic",NA,1993
+"291","Denmark",NA,1993
+"292","Finland",27.07,1993
+"293","France",NA,1993
+"294","Germany",19.22,1993
+"295","Ireland",NA,1993
+"296","Italy",NA,1993
+"297","South Korea",NA,1993
+"298","Luxembourg",NA,1993
+"299","Mexico",NA,1993
+"300","Netherlands",20.24,1993
+"301","Norway",24.08,1993
+"302","Poland",NA,1993
+"303","Russia",NA,1993
+"304","Slovakia",NA,1993
+"305","Spain",NA,1993
+"306","Switzerland",24.45,1993
+"307","United Kingdom",16.4,1993
+"308","United States",18.02,1993
+"309","Australia",17,1994
+"310","Austria",NA,1994
+"311","Belgium",17.19,1994
+"312","Czech Republic",NA,1994
+"313","Denmark",19.77,1994
+"314","Finland",23.28,1994
+"315","France",NA,1994
+"316","Germany",18.26,1994
+"317","Ireland",NA,1994
+"318","Italy",NA,1994
+"319","South Korea",NA,1994
+"320","Luxembourg",NA,1994
+"321","Mexico",NA,1994
+"322","Netherlands",20.24,1994
+"323","Norway",21.89,1994
+"324","Poland",NA,1994
+"325","Russia",NA,1994
+"326","Slovakia",NA,1994
+"327","Spain",NA,1994
+"328","Switzerland",24.45,1994
+"329","United Kingdom",14.43,1994
+"330","United States",17.07,1994
+"331","Australia",17,1995
+"332","Austria",NA,1995
+"333","Belgium",NA,1995
+"334","Czech Republic",NA,1995
+"335","Denmark",19.77,1995
+"336","Finland",23.28,1995
+"337","France",NA,1995
+"338","Germany",17.92,1995
+"339","Ireland",NA,1995
+"340","Italy",NA,1995
+"341","South Korea",NA,1995
+"342","Luxembourg",NA,1995
+"343","Mexico",NA,1995
+"344","Netherlands",20.24,1995
+"345","Norway",21.89,1995
+"346","Poland",NA,1995
+"347","Russia",NA,1995
+"348","Slovakia",NA,1995
+"349","Spain",NA,1995
+"350","Switzerland",NA,1995
+"351","United Kingdom",14.29,1995
+"352","United States",17.48,1995
+"353","Australia",17,1996
+"354","Austria",NA,1996
+"355","Belgium",NA,1996
+"356","Czech Republic",NA,1996
+"357","Denmark",19.77,1996
+"358","Finland",23.28,1996
+"359","France",NA,1996
+"360","Germany",17.63,1996
+"361","Ireland",NA,1996
+"362","Italy",NA,1996
+"363","South Korea",NA,1996
+"364","Luxembourg",NA,1996
+"365","Mexico",NA,1996
+"366","Netherlands",NA,1996
+"367","Norway",21.89,1996
+"368","Poland",NA,1996
+"369","Russia",NA,1996
+"370","Slovakia",NA,1996
+"371","Spain",NA,1996
+"372","Switzerland",NA,1996
+"373","United Kingdom",14.95,1996
+"374","United States",17.42,1996
+"375","Australia",17,1997
+"376","Austria",NA,1997
+"377","Belgium",NA,1997
+"378","Czech Republic",NA,1997
+"379","Denmark",19.77,1997
+"380","Finland",23.28,1997
+"381","France",NA,1997
+"382","Germany",17.36,1997
+"383","Ireland",NA,1997
+"384","Italy",NA,1997
+"385","South Korea",NA,1997
+"386","Luxembourg",NA,1997
+"387","Mexico",NA,1997
+"388","Netherlands",24.18,1997
+"389","Norway",21.89,1997
+"390","Poland",NA,1997
+"391","Russia",NA,1997
+"392","Slovakia",NA,1997
+"393","Spain",NA,1997
+"394","Switzerland",NA,1997
+"395","United Kingdom",15.64,1997
+"396","United States",17.38,1997
+"397","Australia",NA,1998
+"398","Austria",NA,1998
+"399","Belgium",NA,1998
+"400","Czech Republic",NA,1998
+"401","Denmark",20.79,1998
+"402","Finland",22.11,1998
+"403","France",NA,1998
+"404","Germany",17.52,1998
+"405","Ireland",NA,1998
+"406","Italy",NA,1998
+"407","South Korea",NA,1998
+"408","Luxembourg",NA,1998
+"409","Mexico",NA,1998
+"410","Netherlands",24.18,1998
+"411","Norway",22.01,1998
+"412","Poland",NA,1998
+"413","Russia",NA,1998
+"414","Slovakia",NA,1998
+"415","Spain",NA,1998
+"416","Switzerland",26.35,1998
+"417","United Kingdom",15.08,1998
+"418","United States",17.68,1998
+"419","Australia",16.28,1999
+"420","Austria",NA,1999
+"421","Belgium",NA,1999
+"422","Czech Republic",NA,1999
+"423","Denmark",20.79,1999
+"424","Finland",22.11,1999
+"425","France",NA,1999
+"426","Germany",17.49,1999
+"427","Ireland",NA,1999
+"428","Italy",NA,1999
+"429","South Korea",NA,1999
+"430","Luxembourg",NA,1999
+"431","Mexico",NA,1999
+"432","Netherlands",24.18,1999
+"433","Norway",22.01,1999
+"434","Poland",NA,1999
+"435","Russia",NA,1999
+"436","Slovakia",NA,1999
+"437","Spain",NA,1999
+"438","Switzerland",26.35,1999
+"439","United Kingdom",14.98,1999
+"440","United States",17.71,1999
+"441","Australia",16.28,2000
+"442","Austria",NA,2000
+"443","Belgium",NA,2000
+"444","Czech Republic",17.62,2000
+"445","Denmark",20.79,2000
+"446","Finland",22.11,2000
+"447","France",NA,2000
+"448","Germany",17.14,2000
+"449","Ireland",17.49,2000
+"450","Italy",NA,2000
+"451","South Korea",NA,2000
+"452","Luxembourg",18.96,2000
+"453","Mexico",NA,2000
+"454","Netherlands",24.18,2000
+"455","Norway",22.01,2000
+"456","Poland",NA,2000
+"457","Russia",NA,2000
+"458","Slovakia",NA,2000
+"459","Spain",NA,2000
+"460","Switzerland",26.35,2000
+"461","United Kingdom",14.98,2000
+"462","United States",17.87,2000
+"463","Australia",16.28,2001
+"464","Austria",18.66,2001
+"465","Belgium",14.77,2001
+"466","Czech Republic",17.62,2001
+"467","Denmark",20.79,2001
+"468","Finland",22.11,2001
+"469","France",NA,2001
+"470","Germany",16.25,2001
+"471","Ireland",17.49,2001
+"472","Italy",NA,2001
+"473","South Korea",NA,2001
+"474","Luxembourg",18.96,2001
+"475","Mexico",NA,2001
+"476","Netherlands",24.18,2001
+"477","Norway",22.01,2001
+"478","Poland",NA,2001
+"479","Russia",NA,2001
+"480","Slovakia",NA,2001
+"481","Spain",NA,2001
+"482","Switzerland",26.4,2001
+"483","United Kingdom",15.47,2001
+"484","United States",17.47,2001
+"485","Australia",17.1,2002
+"486","Austria",18.66,2002
+"487","Belgium",14.77,2002
+"488","Czech Republic",17.62,2002
+"489","Denmark",20.14,2002
+"490","Finland",22.38,2002
+"491","France",NA,2002
+"492","Germany",15.6,2002
+"493","Ireland",17.49,2002
+"494","Italy",NA,2002
+"495","South Korea",NA,2002
+"496","Luxembourg",18.96,2002
+"497","Mexico",NA,2002
+"498","Netherlands",17.7,2002
+"499","Norway",19.61,2002
+"500","Poland",NA,2002
+"501","Russia",NA,2002
+"502","Slovakia",18.47,2002
+"503","Spain",16.98,2002
+"504","Switzerland",26.4,2002
+"505","United Kingdom",16.03,2002
+"506","United States",17.38,2002
+"507","Australia",17.1,2003
+"508","Austria",18.66,2003
+"509","Belgium",14.77,2003
+"510","Czech Republic",17.39,2003
+"511","Denmark",20.14,2003
+"512","Finland",22.38,2003
+"513","France",NA,2003
+"514","Germany",15.18,2003
+"515","Ireland",15.67,2003
+"516","Italy",NA,2003
+"517","South Korea",NA,2003
+"518","Luxembourg",18.82,2003
+"519","Mexico",NA,2003
+"520","Netherlands",17.7,2003
+"521","Norway",19.61,2003
+"522","Poland",NA,2003
+"523","Russia",NA,2003
+"524","Slovakia",18.47,2003
+"525","Spain",16.98,2003
+"526","Switzerland",26.32,2003
+"527","United Kingdom",15.83,2003
+"528","United States",17.03,2003
+"529","Australia",17.49,2004
+"530","Austria",18.41,2004
+"531","Belgium",14.17,2004
+"532","Czech Republic",17.39,2004
+"533","Denmark",20.14,2004
+"534","Finland",22.38,2004
+"535","France",NA,2004
+"536","Germany",14.97,2004
+"537","Ireland",14.69,2004
+"538","Italy",NA,2004
+"539","South Korea",NA,2004
+"540","Luxembourg",18.61,2004
+"541","Mexico",NA,2004
+"542","Netherlands",17.7,2004
+"543","Norway",19.61,2004
+"544","Poland",NA,2004
+"545","Russia",NA,2004
+"546","Slovakia",18.47,2004
+"547","Spain",16.98,2004
+"548","Switzerland",26.32,2004
+"549","United Kingdom",15.92,2004
+"550","United States",17.1,2004
+"551","Australia",17.49,2005
+"552","Austria",17.53,2005
+"553","Belgium",15.29,2005
+"554","Czech Republic",17.39,2005
+"555","Denmark",20.14,2005
+"556","Finland",22.38,2005
+"557","France",NA,2005
+"558","Germany",13.85,2005
+"559","Ireland",14.7,2005
+"560","Italy",NA,2005
+"561","South Korea",NA,2005
+"562","Luxembourg",18.47,2005
+"563","Mexico",NA,2005
+"564","Netherlands",17.7,2005
+"565","Norway",19.61,2005
+"566","Poland",NA,2005
+"567","Russia",NA,2005
+"568","Slovakia",18.47,2005
+"569","Spain",17.23,2005
+"570","Switzerland",25.49,2005
+"571","United Kingdom",15.48,2005
+"572","United States",17.05,2005
+"573","Australia",18.03,2006
+"574","Austria",16.67,2006
+"575","Belgium",15.45,2006
+"576","Czech Republic",18.85,2006
+"577","Denmark",21.03,2006
+"578","Finland",24.07,2006
+"579","France",NA,2006
+"580","Germany",14.08,2006
+"581","Ireland",14.37,2006
+"582","Italy",NA,2006
+"583","South Korea",NA,2006
+"584","Luxembourg",18.61,2006
+"585","Mexico",NA,2006
+"586","Netherlands",21.72,2006
+"587","Norway",19.61,2006
+"588","Poland",NA,2006
+"589","Russia",NA,2006
+"590","Slovakia",21.17,2006
+"591","Spain",18.15,2006
+"592","Switzerland",25.49,2006
+"593","United Kingdom",15.67,2006
+"594","United States",17.04,2006
+"595","Australia",18.03,2007
+"596","Austria",16.05,2007
+"597","Belgium",15.48,2007
+"598","Czech Republic",18.85,2007
+"599","Denmark",21.03,2007
+"600","Finland",24.07,2007
+"601","France",NA,2007
+"602","Germany",14.29,2007
+"603","Ireland",14.56,2007
+"604","Italy",NA,2007
+"605","South Korea",NA,2007
+"606","Luxembourg",18.69,2007
+"607","Mexico",NA,2007
+"608","Netherlands",21.72,2007
+"609","Norway",NA,2007
+"610","Poland",NA,2007
+"611","Russia",NA,2007
+"612","Slovakia",21.17,2007
+"613","Spain",18.84,2007
+"614","Switzerland",25.05,2007
+"615","United Kingdom",16.01,2007
+"616","United States",17.35,2007
+"617","Australia",18.03,2008
+"618","Austria",15.99,2008
+"619","Belgium",16.12,2008
+"620","Czech Republic",18.85,2008
+"621","Denmark",21.03,2008
+"622","Finland",24.07,2008
+"623","France",NA,2008
+"624","Germany",14.74,2008
+"625","Ireland",11.77,2008
+"626","Italy",NA,2008
+"627","South Korea",NA,2008
+"628","Luxembourg",17.2,2008
+"629","Mexico",NA,2008
+"630","Netherlands",21.72,2008
+"631","Norway",20.48,2008
+"632","Poland",NA,2008
+"633","Russia",NA,2008
+"634","Slovakia",21.17,2008
+"635","Spain",18.02,2008
+"636","Switzerland",24.85,2008
+"637","United Kingdom",15.73,2008
+"638","United States",16.76,2008
+"639","Australia",17.56,2009
+"640","Austria",14.94,2009
+"641","Belgium",16.12,2009
+"642","Czech Republic",18.64,2009
+"643","Denmark",19.17,2009
+"644","Finland",24.08,2009
+"645","France",NA,2009
+"646","Germany",14.2,2009
+"647","Ireland",9.28,2009
+"648","Italy",NA,2009
+"649","South Korea",NA,2009
+"650","Luxembourg",17.4,2009
+"651","Mexico",NA,2009
+"652","Netherlands",22.21,2009
+"653","Norway",20.48,2009
+"654","Poland",NA,2009
+"655","Russia",NA,2009
+"656","Slovakia",19.94,2009
+"657","Spain",16.38,2009
+"658","Switzerland",25.11,2009
+"659","United Kingdom",14.99,2009
+"660","United States",15.86,2009
+"661","Australia",17.56,2010
+"662","Austria",15.07,2010
+"663","Belgium",16.12,2010
+"664","Czech Republic",18.64,2010
+"665","Denmark",19.17,2010
+"666","Finland",24.08,2010
+"667","France",NA,2010
+"668","Germany",14.19,2010
+"669","Ireland",8.82,2010
+"670","Italy",NA,2010
+"671","South Korea",NA,2010
+"672","Luxembourg",17.79,2010
+"673","Mexico",NA,2010
+"674","Netherlands",22.21,2010
+"675","Norway",20.48,2010
+"676","Poland",NA,2010
+"677","Russia",NA,2010
+"678","Slovakia",19.94,2010
+"679","Spain",15.06,2010
+"680","Switzerland",24.79,2010
+"681","United Kingdom",14.99,2010
+"682","United States",15.6,2010
+"683","Australia",17.56,2011
+"684","Austria",15.23,2011
+"685","Belgium",NA,2011
+"686","Czech Republic",18.64,2011
+"687","Denmark",19.17,2011
+"688","Finland",24.08,2011
+"689","France",NA,2011
+"690","Germany",14.31,2011
+"691","Ireland",9.13,2011
+"692","Italy",NA,2011
+"693","South Korea",NA,2011
+"694","Luxembourg",17.1,2011
+"695","Mexico",NA,2011
+"696","Netherlands",22.21,2011
+"697","Norway",20.48,2011
+"698","Poland",NA,2011
+"699","Russia",NA,2011
+"700","Slovakia",19.94,2011
+"701","Spain",15.05,2011
+"702","Switzerland",25.16,2011
+"703","United Kingdom",15.41,2011
+"704","United States",15.33,2011
+"705","Australia",17.49,2012
+"706","Austria",15.2,2012
+"707","Belgium",NA,2012
+"708","Czech Republic",18.01,2012
+"709","Denmark",18.78,2012
+"710","Finland",24.13,2012
+"711","France",NA,2012
+"712","Germany",14.1,2012
+"713","Ireland",8.47,2012
+"714","Italy",12.29,2012
+"715","South Korea",NA,2012
+"716","Luxembourg",16.28,2012
+"717","Mexico",NA,2012
+"718","Netherlands",21.35,2012
+"719","Norway",20.61,2012
+"720","Poland",NA,2012
+"721","Russia",NA,2012
+"722","Slovakia",20.38,2012
+"723","Spain",14.56,2012
+"724","Switzerland",25.22,2012
+"725","United Kingdom",15.41,2012
+"726","United States",15.37,2012
+"727","Australia",17.49,2013
+"728","Austria",15.16,2013
+"729","Belgium",NA,2013
+"730","Czech Republic",18.01,2013
+"731","Denmark",18.78,2013
+"732","Finland",24.13,2013
+"733","France",NA,2013
+"734","Germany",13.71,2013
+"735","Ireland",9.36,2013
+"736","Italy",12.29,2013
+"737","South Korea",NA,2013
+"738","Luxembourg",16.85,2013
+"739","Mexico",NA,2013
+"740","Netherlands",21.35,2013
+"741","Norway",20.61,2013
+"742","Poland",NA,2013
+"743","Russia",NA,2013
+"744","Slovakia",20.38,2013
+"745","Spain",13.25,2013
+"746","Switzerland",24.12,2013
+"747","United Kingdom",16.08,2013
+"748","United States",15.63,2013
+"749","Australia",17.49,2014
+"750","Austria",15.33,2014
+"751","Belgium",NA,2014
+"752","Czech Republic",18.01,2014
+"753","Denmark",18.78,2014
+"754","Finland",24.13,2014
+"755","France",NA,2014
+"756","Germany",13.98,2014
+"757","Ireland",10.99,2014
+"758","Italy",12.29,2014
+"759","South Korea",NA,2014
+"760","Luxembourg",17.43,2014
+"761","Mexico",NA,2014
+"762","Netherlands",20.97,2014
+"763","Norway",20.61,2014
+"764","Poland",NA,2014
+"765","Russia",NA,2014
+"766","Slovakia",22.29,2014
+"767","Spain",13.35,2014
+"768","Switzerland",24.2,2014
+"769","United Kingdom",16.08,2014
+"770","United States",15.58,2014
+"771","Australia",18.03,2015
+"772","Austria",15.09,2015
+"773","Belgium",NA,2015
+"774","Czech Republic",18.94,2015
+"775","Denmark",18.77,2015
+"776","Finland",24.14,2015
+"777","France",NA,2015
+"778","Germany",14.06,2015
+"779","Ireland",11.9,2015
+"780","Italy",11.82,2015
+"781","South Korea",NA,2015
+"782","Luxembourg",18.54,2015
+"783","Mexico",NA,2015
+"784","Netherlands",20.97,2015
+"785","Norway",19.68,2015
+"786","Poland",NA,2015
+"787","Russia",NA,2015
+"788","Slovakia",21.89,2015
+"789","Spain",13.43,2015
+"790","Switzerland",23.93,2015
+"791","United Kingdom",16.91,2015
+"792","United States",15.71,2015
+"793","Australia",18.27,2016
+"794","Austria",15.63,2016
+"795","Belgium",NA,2016
+"796","Czech Republic",NA,2016
+"797","Denmark",NA,2016
+"798","Finland",NA,2016
+"799","France",NA,2016
+"800","Germany",14.64,2016
+"801","Ireland",14.65,2016
+"802","Italy",NA,2016
+"803","South Korea",NA,2016
+"804","Luxembourg",16.49,2016
+"805","Mexico",NA,2016
+"806","Netherlands",21.41,2016
+"807","Norway",18.99,2016
+"808","Poland",NA,2016
+"809","Russia",NA,2016
+"810","Slovakia",22.54,2016
+"811","Spain",15.75,2016
+"812","Switzerland",23.78,2016
+"813","United Kingdom",17.14,2016
+"814","United States",14.97,2016
+"815","Australia",18.27,2017
+"816","Austria",15.62,2017
+"817","Belgium",NA,2017
+"818","Czech Republic",18.94,2017
+"819","Denmark",18.77,2017
+"820","Finland",24.14,2017
+"821","France",NA,2017
+"822","Germany",13.88,2017
+"823","Ireland",13.32,2017
+"824","Italy",11.82,2017
+"825","South Korea",NA,2017
+"826","Luxembourg",15.97,2017
+"827","Mexico",NA,2017
+"828","Netherlands",21,2017
+"829","Norway",19.68,2017
+"830","Poland",NA,2017
+"831","Russia",NA,2017
+"832","Slovakia",23.28,2017
+"833","Spain",14.52,2017
+"834","Switzerland",24.09,2017
+"835","United Kingdom",16.91,2017
+"836","United States",15.87,2017
+"837","Australia",18.27,2018
+"838","Austria",15.3,2018
+"839","Belgium",NA,2018
+"840","Czech Republic",18.94,2018
+"841","Denmark",18.77,2018
+"842","Finland",24.14,2018
+"843","France",NA,2018
+"844","Germany",14.25,2018
+"845","Ireland",14.17,2018
+"846","Italy",11.82,2018
+"847","South Korea",NA,2018
+"848","Luxembourg",16.49,2018
+"849","Mexico",NA,2018
+"850","Netherlands",21.41,2018
+"851","Norway",19.8,2018
+"852","Poland",NA,2018
+"853","Russia",NA,2018
+"854","Slovakia",22.54,2018
+"855","Spain",14.76,2018
+"856","Switzerland",23.78,2018
+"857","United Kingdom",16.91,2018
+"858","United States",16.06,2018
+"859","Australia",18.27,2019
+"860","Austria",15.63,2019
+"861","Belgium",NA,2019
+"862","Czech Republic",NA,2019
+"863","Denmark",NA,2019
+"864","Finland",NA,2019
+"865","France",NA,2019
+"866","Germany",14.64,2019
+"867","Ireland",14.65,2019
+"868","Italy",NA,2019
+"869","South Korea",NA,2019
+"870","Luxembourg",16.49,2019
+"871","Mexico",NA,2019
+"872","Netherlands",21.41,2019
+"873","Norway",19.8,2019
+"874","Poland",NA,2019
+"875","Russia",NA,2019
+"876","Slovakia",22.54,2019
+"877","Spain",15.75,2019
+"878","Switzerland",23.78,2019
+"879","United Kingdom",17.14,2019
+"880","United States",16.16,2019
+"881","Australia",18.27,2020
+"882","Austria",15.63,2020
+"883","Belgium",NA,2020
+"884","Czech Republic",NA,2020
+"885","Denmark",NA,2020
+"886","Finland",NA,2020
+"887","France",NA,2020
+"888","Germany",14.64,2020
+"889","Ireland",14.65,2020
+"890","Italy",NA,2020
+"891","South Korea",NA,2020
+"892","Luxembourg",16.49,2020
+"893","Mexico",NA,2020
+"894","Netherlands",21.41,2020
+"895","Norway",18.99,2020
+"896","Poland",NA,2020
+"897","Russia",NA,2020
+"898","Slovakia",22.54,2020
+"899","Spain",15.75,2020
+"900","Switzerland",23.78,2020
+"901","United Kingdom",17.14,2020
+"902","United States",14.97,2020

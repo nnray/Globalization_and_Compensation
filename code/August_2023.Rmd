@@ -1,0 +1,131 @@
+---
+title: "Globalization and Compensation"
+author: "Nicholas Ray"
+date: "6/16/2023"
+output: html_document
+---
+```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
+library(here);library(readxl);library(cowplot);library(zoo);library(plm);
+library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(Amelia);
+library(panelr);library(tidyverse)
+```
+```{r data,message=FALSE,warning=FALSE,include=FALSE}
+spending<-read.csv(
+  unzip(here("data","spending","SOCX.zip"),"SOCX_AGG_16062023181903485.csv")
+  )
+imports<-read_csv(
+  here("data","imports","DP_LIVE_16062023180545012.csv")
+  )
+income<-read_xlsx(
+  here("data","income","dart-table_mean_1686923456066.xlsx")
+  )
+households<-read_csv(
+  here("data","income","IDD_16062023154218231.csv")
+  )
+gdp<-read_xls(
+  here("data","gdp","ppp_US_since_1990",
+       "API_NY.GDP.MKTP.PP.KD_DS2_en_excel_v2_5455539.xls"),
+  col_names=TRUE, skip=2
+  )
+lorenz<-read.csv(
+  here("data","income","lorenz_50.csv")
+  )
+```
+```{r cleaning}
+country_codes<-c("AUS","AUT","BEL","CAN","DEU","DNK","ESP","FIN","FRA","GBR",
+             "IRL","ITA","LUX","MEX","NLD","NOR","POL","SWE","USA")
+################################################################################
+# net total (public and private) social spending in percentage of GDP
+spending<-spending %>%
+  filter(Source=="Public") %>%
+  rename(country_code=COUNTRY,year=Year,spending=Value) %>%
+  select(country_code,year,spending) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+# annual imports as a percentage of GDP (proxy for economic globalization)
+imports<-imports %>%
+  rename(country_code=LOCATION,year=TIME,imports=Value) %>%
+  select(country_code,year,imports) %>%
+  subset(country_code %in% country_codes)
+################################################################################
+# GDP cleaning
+gdp<-gdp %>%
+  pivot_longer(5:67,names_to = "year",values_to = "gdp") %>%
+  rename(country=`Country Name`,country_code=`Country Code`) %>%
+  select(country,country_code,year,gdp) %>%
+  subset(country_code %in% country_codes) %>%
+  filter(year > 1979 & year < 2021) %>%
+  mutate(year=as.numeric(year))
+################################################################################
+income<-income %>%
+  pivot_longer(2:42,names_to = "year",values_to = "income") %>%
+  rename(country=countries) %>%
+  mutate(year=as.numeric(year))
+################################################################################
+households<-households %>%
+  filter(Measure=="Total number of households",
+         Methodology=="New income definition since 2012") %>%
+  rename(country=Country,year=Year,households=Value) %>%
+  select(country,year,households)
+################################################################################
+# creating macro dataset and creating new variables
+data<-gdp %>%
+  left_join(.,lorenz,by=c("country","year")) %>%
+  left_join(.,spending,by=c("country_code","year")) %>%
+  left_join(.,income,by=c("country","year")) %>%
+  left_join(.,imports,by=c("country_code","year")) %>%
+  left_join(.,households,by=c("country","year"))
+data<-data %>%
+  group_by(country,year) %>%
+  mutate(total_income=(income*households)*(lorenz*0.01),
+         total_spending=(spending*0.01)*gdp)
+data$total_spending_diff<-ifelse(
+  is.na(data$total_spending)==TRUE,NA,diff(data$total_spending)
+)
+data$total_income_diff<-ifelse(
+  is.na(data$total_income)==TRUE,NA,diff(data$total_income)
+)
+```
+```{r figures}
+figure1<-data %>%
+  filter(country !="Canada",country !="France",country !="Mexico",
+         country !="Poland",country !="Sweden") %>%
+  panel_data(.,id = country,wave = year) %>%
+  line_plot(lorenz,
+            overlay = FALSE,
+            add.mean = TRUE)
+figure1<-figure1 + geom_line(mapping=aes(y=spending),size=0.5)
+figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
+                               method = "lm",formula = y~x,
+                               colour = "red", se = FALSE, size=0.4)
+figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
+figure2<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id = country_code,wave = year) %>%
+  line_plot(total_income,
+            overlay = FALSE,
+            add.mean = TRUE)
+figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
+figure3<-data %>%
+  filter(country != "United States") %>%
+  panel_data(.,id=country,wave = year) %>%
+  line_plot(total_spending_diff,
+            overlay = FALSE,
+            add.mean = TRUE,
+            line.size = 0.5)
+figure3<-figure3 + geom_line(mapping=aes(y=total_income_diff),linewidth=0.5)
+figure3<-figure3 + geom_smooth(mapping=aes(y=total_income_diff,x=year),
+                               method = "lm",formula = y~x,
+                               colour = "red", se = FALSE, linewidth=0.4)
+figure4<-data %>%
+  filter(country !="Canada",country !="France",country !="Mexico",
+         country !="Poland",country !="Sweden") %>%
+  panel_data(.,id=country,wave = year) %>%
+  line_plot(lorenz/spending,
+            overlay = FALSE,
+            add.mean = TRUE,
+            line.size = 0.5)
+```
+```{r}
+summary(lm(spending~lorenz+as.factor(country),data))
+```

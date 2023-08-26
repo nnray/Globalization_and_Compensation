@@ -1,159 +1,131 @@
----
-title: "Globalization and Compensation"
-author: "Nicholas Ray"
-date: "6/16/2023"
-output: html_document
----
-```{r libraries,message=FALSE,warning=FALSE,include=FALSE}
-library(here);library(readxl);library(cowplot);library(zoo);library(plm);
-library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(Amelia);
-library(panelr);library(tidyverse)
-```
-```{r data,message=FALSE,warning=FALSE,include=FALSE}
-spending<-read.csv(
-  unzip(here("data","spending","SOCX.zip"),"SOCX_AGG_16062023181903485.csv")
-  )
-imports<-read_csv(
-  here("data","imports","DP_LIVE_16062023180545012.csv")
-  )
-income<-read_xlsx(
-  here("data","income","dart-table_mean_1686923456066.xlsx")
-  )
-households<-read_csv(
-  here("data","income","IDD_16062023154218231.csv")
-  )
-gdp<-read_xls(
-  here("data","gdp","ppp_US_since_1990",
-       "API_NY.GDP.MKTP.PP.KD_DS2_en_excel_v2_5455539.xls"),
-  col_names=TRUE, skip=2
-  )
-```
-```{r lorenz data and cleaning}
+library(readxl);library(tidyverse);library(here)
+#Lorenz curves for every year (there was no aggregated download on LIS)
 lorenz_80<-read_xlsx(
   here("data","income","lorenz","80.xlsx")
-  )
+)
 lorenz_81<-read_xlsx(
   here("data","income","lorenz","81.xlsx")
-  )
+)
 lorenz_82<-read_xlsx(
   here("data","income","lorenz","82.xlsx")
-  )
+)
 lorenz_83<-read_xlsx(
   here("data","income","lorenz","83.xlsx")
-  )
+)
 lorenz_84<-read_xlsx(
   here("data","income","lorenz","84.xlsx")
-  )
+)
 lorenz_85<-read_xlsx(
   here("data","income","lorenz","85.xlsx")
-  )
+)
 lorenz_86<-read_xlsx(
   here("data","income","lorenz","86.xlsx")
-  )
+)
 lorenz_87<-read_xlsx(
   here("data","income","lorenz","87.xlsx")
-  )
+)
 lorenz_88<-read_xlsx(
   here("data","income","lorenz","88.xlsx")
-  )
+)
 lorenz_89<-read_xlsx(
   here("data","income","lorenz","89.xlsx")
-  )
+)
 lorenz_90<-read_xlsx(
   here("data","income","lorenz","90.xlsx")
-  )
+)
 lorenz_91<-read_xlsx(
   here("data","income","lorenz","91.xlsx")
-  )
+)
 lorenz_92<-read_xlsx(
   here("data","income","lorenz","92.xlsx")
-  )
+)
 lorenz_93<-read_xlsx(
   here("data","income","lorenz","93.xlsx")
-  )
+)
 lorenz_94<-read_xlsx(
   here("data","income","lorenz","94.xlsx")
-  )
+)
 lorenz_95<-read_xlsx(
   here("data","income","lorenz","95.xlsx")
-  )
+)
 lorenz_96<-read_xlsx(
   here("data","income","lorenz","96.xlsx")
-  )
+)
 lorenz_97<-read_xlsx(
   here("data","income","lorenz","97.xlsx")
-  )
+)
 lorenz_98<-read_xlsx(
   here("data","income","lorenz","98.xlsx")
-  )
+)
 lorenz_99<-read_xlsx(
   here("data","income","lorenz","99.xlsx")
-  )
+)
 lorenz_00<-read_xlsx(
   here("data","income","lorenz","00.xlsx")
-  )
+)
 lorenz_01<-read_xlsx(
   here("data","income","lorenz","01.xlsx")
-  )
+)
 lorenz_02<-read_xlsx(
   here("data","income","lorenz","02.xlsx")
-  )
+)
 lorenz_03<-read_xlsx(
   here("data","income","lorenz","03.xlsx")
-  )
+)
 lorenz_04<-read_xlsx(
   here("data","income","lorenz","04.xlsx")
-  )
+)
 lorenz_05<-read_xlsx(
   here("data","income","lorenz","05.xlsx")
-  )
+)
 lorenz_06<-read_xlsx(
   here("data","income","lorenz","06.xlsx")
-  )
+)
 lorenz_07<-read_xlsx(
   here("data","income","lorenz","07.xlsx")
-  )
+)
 lorenz_08<-read_xlsx(
   here("data","income","lorenz","08.xlsx")
-  )
+)
 lorenz_09<-read_xlsx(
   here("data","income","lorenz","09.xlsx")
-  )
+)
 lorenz_10<-read_xlsx(
   here("data","income","lorenz","10.xlsx")
-  )
+)
 lorenz_11<-read_xlsx(
   here("data","income","lorenz","11.xlsx")
-  )
+)
 lorenz_12<-read_xlsx(
   here("data","income","lorenz","12.xlsx")
-  )
+)
 lorenz_13<-read_xlsx(
   here("data","income","lorenz","13.xlsx")
-  )
+)
 lorenz_14<-read_xlsx(
   here("data","income","lorenz","14.xlsx")
-  )
+)
 lorenz_15<-read_xlsx(
   here("data","income","lorenz","15.xlsx")
-  )
+)
 lorenz_16<-read_xlsx(
   here("data","income","lorenz","16.xlsx")
-  )
+)
 lorenz_17<-read_xlsx(
   here("data","income","lorenz","17.xlsx")
-  )
+)
 lorenz_18<-read_xlsx(
   here("data","income","lorenz","18.xlsx")
-  )
+)
 lorenz_19<-read_xlsx(
   here("data","income","lorenz","19.xlsx")
-  )
+)
 lorenz_20<-read_xlsx(
   here("data","income","lorenz","20.xlsx")
-  )
+)
 ################################################################################
-# Lorenz curve cleaning (to extract share of income earned by the lower _ of the population)
+# Lorenz curve cleaning (to extract share of income earned by the lower 50% of
+#the population)
 lorenz_80<-lorenz_80 %>%
   select(countries,`50`) %>%
   rename(country=countries,lorenz=`50`) %>%
@@ -359,99 +331,4 @@ lorenz<-lorenz_80 %>%
   full_join(.,lorenz_18,by=c("country","year","lorenz")) %>%
   full_join(.,lorenz_19,by=c("country","year","lorenz")) %>%
   full_join(.,lorenz_20,by=c("country","year","lorenz"))
-```
-```{r cleaning}
-country_codes<-c("AUS","AUT","BEL","CAN","DEU","DNK","ESP","FIN","FRA","GBR",
-             "IRL","ITA","LUX","MEX","NLD","NOR","POL","SWE","USA")
-################################################################################
-# net total (public and private) social spending in percentage of GDP
-spending<-spending %>%
-  filter(Source=="Public") %>%
-  rename(country_code=COUNTRY,year=Year,spending=Value) %>%
-  select(country_code,year,spending) %>%
-  subset(country_code %in% country_codes)
-################################################################################
-# annual imports as a percentage of GDP (proxy for economic globalization)
-imports<-imports %>%
-  rename(country_code=LOCATION,year=TIME,imports=Value) %>%
-  select(country_code,year,imports) %>%
-  subset(country_code %in% country_codes)
-################################################################################
-# GDP cleaning
-gdp<-gdp %>%
-  pivot_longer(5:67,names_to = "year",values_to = "gdp") %>%
-  rename(country=`Country Name`,country_code=`Country Code`) %>%
-  select(country,country_code,year,gdp) %>%
-  subset(country_code %in% country_codes) %>%
-  filter(year > 1979 & year < 2021) %>%
-  mutate(year=as.numeric(year))
-################################################################################
-income<-income %>%
-  pivot_longer(2:42,names_to = "year",values_to = "income") %>%
-  rename(country=countries) %>%
-  mutate(year=as.numeric(year))
-################################################################################
-households<-households %>%
-  filter(Measure=="Total number of households",
-         Methodology=="New income definition since 2012") %>%
-  rename(country=Country,year=Year,households=Value) %>%
-  select(country,year,households)
-################################################################################
-# creating macro dataset and creating new variables
-data<-gdp %>%
-  left_join(.,lorenz,by=c("country","year")) %>%
-  left_join(.,spending,by=c("country_code","year")) %>%
-  left_join(.,income,by=c("country","year")) %>%
-  left_join(.,imports,by=c("country_code","year")) %>%
-  left_join(.,households,by=c("country","year"))
-data<-data %>%
-  group_by(country,year) %>%
-  mutate(total_income=(income*households)*(lorenz*0.01),
-         total_spending=(spending*0.01)*gdp)
-data$total_spending_diff<-ifelse(
-  is.na(data$total_spending)==TRUE,NA,diff(data$total_spending)
-)
-data$total_income_diff<-ifelse(
-  is.na(data$total_income)==TRUE,NA,diff(data$total_income)
-)
-```
-```{r figures}
-figure1<-data %>%
-  panel_data(.,id = country,wave = year) %>%
-  line_plot(lorenz,
-            overlay = FALSE,
-            add.mean = TRUE)
-figure1<-figure1 + geom_line(mapping=aes(y=spending),size=0.5)
-figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
-                               method = "lm",formula = y~x,
-                               colour = "red", se = FALSE, size=0.4)
-figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
-figure2<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id = country_code,wave = year) %>%
-  line_plot(total_income,
-            overlay = FALSE,
-            add.mean = TRUE)
-figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
-figure3<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id=country,wave = year) %>%
-  line_plot(total_spending_diff,
-            overlay = FALSE,
-            add.mean = TRUE,
-            line.size = 0.5)
-figure3<-figure3 + geom_line(mapping=aes(y=total_income_diff),linewidth=0.5)
-figure3<-figure3 + geom_smooth(mapping=aes(y=total_income_diff,x=year),
-                               method = "lm",formula = y~x,
-                               colour = "red", se = FALSE, linewidth=0.4)
-figure4<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id=country,wave = year) %>%
-  line_plot(total_income_diff,
-            overlay = FALSE,
-            add.mean = TRUE,
-            line.size = 0.5)
-```
-changes in real income do not capture changes in unrealized income (i.e., loss). income for the lower half of the population have gone up over time, but how much higher should it be had income growth been equal? That difference is the amount that must be compared to social spending. you need to 1) figure out who has experienced the least income growth, 2) how much income they have had, and 3) how much they would have had if growth been more equally distributed. Then, 4) find the difference between "expected" income (under equal growth) and "real" income. This number is what must be compensated.
-
-One option would be to stop relying on aggregate or easy to collect data like from the LIS. Can look at the statistics bureaus of each country.
+write.csv(lorenz,file=here("data","income","lorenz_50.csv"))
