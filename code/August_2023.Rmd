@@ -100,24 +100,6 @@ figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
                                colour = "red", se = FALSE, size=0.4)
 figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
 figure2<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id = country_code,wave = year) %>%
-  line_plot(total_income,
-            overlay = FALSE,
-            add.mean = TRUE)
-figure2<-figure2 + geom_line(mapping=aes(y=total_spending))
-figure3<-data %>%
-  filter(country != "United States") %>%
-  panel_data(.,id=country,wave = year) %>%
-  line_plot(total_spending_diff,
-            overlay = FALSE,
-            add.mean = TRUE,
-            line.size = 0.5)
-figure3<-figure3 + geom_line(mapping=aes(y=total_income_diff),linewidth=0.5)
-figure3<-figure3 + geom_smooth(mapping=aes(y=total_income_diff,x=year),
-                               method = "lm",formula = y~x,
-                               colour = "red", se = FALSE, linewidth=0.4)
-figure4<-data %>%
   filter(country !="Canada",country !="France",country !="Mexico",
          country !="Poland",country !="Sweden") %>%
   panel_data(.,id=country,wave = year) %>%
@@ -125,6 +107,7 @@ figure4<-data %>%
             overlay = FALSE,
             add.mean = TRUE,
             line.size = 0.5)
+figure2<-figure2 + labs(title="Public Social Spending (% of GDP) divided by the Income Share (% of Total Income) of the Bottom Half of the Population", x="Year",y="Income Share / Spending Share",subtitle = "A decreasing trend implies that spending shares were larger than income shares and vice versa.")
 ```
 ```{r}
 summary(lm(spending~lorenz+as.factor(country),data))
