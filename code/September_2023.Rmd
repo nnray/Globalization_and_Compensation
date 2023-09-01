@@ -1,0 +1,39 @@
+---
+title: "September_2023"
+output: html_document
+date: "2023-09-01"
+---
+https://www.dol.gov/agencies/eta/tradeact/data/financial-data
+https://www.bls.gov/sae/data/
+```{r library, include=FALSE}
+library(here);library(panelr);library(readxl);library(tidyverse)
+```
+```{r data, include=FALSE}
+taa<-read_excel(
+  here("data","spending","Allocations Data.xlsx")
+  )
+employment<-read.csv(
+  here("data","employment","employment.csv")
+)
+```
+```{r include=FALSE}
+taa<-taa %>%
+  rename(state=State,year=`Grant Year`,assistance=`Allocated Funds`) %>%
+  group_by(state,year) %>%
+  summarize(assistance=sum(assistance))
+data<-left_join(employment,taa) %>%
+  
+```
+```{r include=FALSE}
+figure1<-data %>%
+  panel_data(.,id=state,wave=year) %>%
+  line_plot((employment*1000), #employment was in thousands
+            overlay = FALSE,
+            add.mean = TRUE,
+            line.size = 0.5)
+figure1<-figure1 + geom_line(mapping=aes(y=(assistance/100)),size=0.5)
+figure1<-figure1 + geom_smooth(mapping=aes(y=(assistance/100),x=year),
+                               method = "lm",formula = y~x,
+                               colour = "red", se = FALSE, size=0.4)
+figure1<-figure1 + labs(title="TAA (thin line with red mean) versus Employment (thick, dotted line with blue mean) across U.S. States from 2009 to 2022", x="Year",y="Number of People Employed and Hundreds of Dollars Spent",subtitle = "1e+06 equals 1,000,000 and 5e+05 equals 500,000.")
+```

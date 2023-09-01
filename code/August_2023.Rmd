@@ -85,6 +85,9 @@ data$total_spending_diff<-ifelse(
 data$total_income_diff<-ifelse(
   is.na(data$total_income)==TRUE,NA,diff(data$total_income)
 )
+data$imports_diff<-ifelse(
+  is.na(data$imports)==TRUE,NA,diff(data$imports)
+)
 ```
 ```{r figures}
 figure1<-data %>%
@@ -107,8 +110,15 @@ figure2<-data %>%
             overlay = FALSE,
             add.mean = TRUE,
             line.size = 0.5)
-figure2<-figure2 + labs(title="Public Social Spending (% of GDP) divided by the Income Share (% of Total Income) of the Bottom Half of the Population", x="Year",y="Income Share / Spending Share",subtitle = "A decreasing trend implies that spending shares were larger than income shares and vice versa.")
+figure2<-figure2 + labs(title="Income (% of Total Income) Earned by the Bottom Half of the Population divided by Public Social Spending (% of GDP)", x="Year",y="Income Share / Spending Share",subtitle = "A decreasing trend implies that income shares (numerator) are decreasing and/or social spending shares (denominator) are increasing.")
+figure3<-data %>%
+  filter(country !="Canada",country !="France",country !="Mexico",
+         country !="Poland",country !="Sweden") %>%
+  panel_data(.,id = country,wave = year) %>%
+  line_plot(imports,
+            overlay = FALSE,
+            add.mean = TRUE)
 ```
-```{r}
-summary(lm(spending~lorenz+as.factor(country),data))
+```{r include=FALSE}
+summary(lm(spending~lorenz+as.factor(country)+as.factor(year),data))
 ```
