@@ -10,8 +10,10 @@ library(lmtest);library(pcse);library(pdynmc);library(stargazer);library(Amelia)
 library(panelr);library(tidyverse)
 ```
 ```{r data,message=FALSE,warning=FALSE,include=FALSE}
+# spending from https://stats.oecd.org/Index.aspx?datasetcode=SOCX_AGG#
 spending<-read.csv(
-  unzip(here("data","spending","SOCX.zip"),"SOCX_AGG_16062023181903485.csv")
+  unzip(here("data","spending","SOCX.zip"),
+        "SOCX_AGG_16062023181903485.csv")
   )
 imports<-read_csv(
   here("data","imports","DP_LIVE_16062023180545012.csv")
@@ -27,15 +29,24 @@ gdp<-read_xls(
        "API_NY.GDP.MKTP.PP.KD_DS2_en_excel_v2_5455539.xls"),
   col_names=TRUE, skip=2
   )
-lorenz<-read.csv(
+# lorenz from https://dart.lisdatacenter.org/
+# income share earned by the lower _% of the population
+lorenz_50<-read.csv(
   here("data","income","lorenz_50.csv")
   )
+lorenz_75<-read.csv(
+  here("data","income","lorenz_75.csv")
+  )
+lorenz_90<-read.csv(
+  here("data","income","lorenz_90.csv")
+  )
 ```
-```{r cleaning}
+```{r cleaning, include=FALSE}
+# countries with available data
 country_codes<-c("AUS","AUT","BEL","CAN","DEU","DNK","ESP","FIN","FRA","GBR",
              "IRL","ITA","LUX","MEX","NLD","NOR","POL","SWE","USA")
 ################################################################################
-# net total (public and private) social spending in percentage of GDP
+# public social spending in percentage of GDP
 spending<-spending %>%
   filter(Source=="Public") %>%
   rename(country_code=COUNTRY,year=Year,spending=Value) %>%
@@ -70,15 +81,20 @@ households<-households %>%
 ################################################################################
 # creating macro dataset and creating new variables
 data<-gdp %>%
-  left_join(.,lorenz,by=c("country","year")) %>%
+  left_join(.,lorenz_50,by=c("country","year")) %>%
+  left_join(.,lorenz_75,by=c("country","year")) %>%
+  left_join(.,lorenz_90,by=c("country","year")) %>%
   left_join(.,spending,by=c("country_code","year")) %>%
   left_join(.,income,by=c("country","year")) %>%
   left_join(.,imports,by=c("country_code","year")) %>%
   left_join(.,households,by=c("country","year"))
+# trying to convert lorenz percentages into a dollar figure, but imperfect for reasons
+# including the obscured process of "equivalization" of household income
 data<-data %>%
   group_by(country,year) %>%
-  mutate(total_income=(income*households)*(lorenz*0.01),
+  mutate(total_income=(income*households)*(lorenz_50*0.01),
          total_spending=(spending*0.01)*gdp)
+# making some differences
 data$total_spending_diff<-ifelse(
   is.na(data$total_spending)==TRUE,NA,diff(data$total_spending)
 )
@@ -89,36 +105,102 @@ data$imports_diff<-ifelse(
   is.na(data$imports)==TRUE,NA,diff(data$imports)
 )
 ```
-```{r figures}
-figure1<-data %>%
+```{r figures, include=FALSE}
+figure_data<-data %>%
   filter(country !="Canada",country !="France",country !="Mexico",
-         country !="Poland",country !="Sweden") %>%
+         country !="Poland",country !="Sweden") #missing data on these
+figure1<-figure_data %>%
   panel_data(.,id = country,wave = year) %>%
-  line_plot(lorenz,
+  line_plot(lorenz_90,
             overlay = FALSE,
             add.mean = TRUE)
 figure1<-figure1 + geom_line(mapping=aes(y=spending),size=0.5)
 figure1<-figure1 + geom_smooth(mapping=aes(y=spending,x=year),
                                method = "lm",formula = y~x,
                                colour = "red", se = FALSE, size=0.4)
-figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom Half of the Population",x="Year",y="Percentage",subtitle = "Thin Black Line (with Red Slope) is Social Spending, While Thick Dotted Line (with Blue Slope) is Income Share")
-figure2<-data %>%
-  filter(country !="Canada",country !="France",country !="Mexico",
-         country !="Poland",country !="Sweden") %>%
-  panel_data(.,id=country,wave = year) %>%
-  line_plot(lorenz/spending,
-            overlay = FALSE,
-            add.mean = TRUE,
-            line.size = 0.5)
-figure2<-figure2 + labs(title="Income (% of Total Income) Earned by the Bottom Half of the Population divided by Public Social Spending (% of GDP)", x="Year",y="Income Share / Spending Share",subtitle = "A decreasing trend implies that income shares (numerator) are decreasing and/or social spending shares (denominator) are increasing.")
-figure3<-data %>%
-  filter(country !="Canada",country !="France",country !="Mexico",
-         country !="Poland",country !="Sweden") %>%
-  panel_data(.,id = country,wave = year) %>%
-  line_plot(imports,
-            overlay = FALSE,
-            add.mean = TRUE)
+figure1<-figure1 + labs(title="Public Social Spending (% of GDP) versus the Income Share (% of Total Income) of the Bottom 90% of Earners",x="Year",y="Percentage",subtitle = "Thin Black Line with Red Slope (Coefficient on the Left) is Social Spending While Thick Dotted Line with Blue Slope is Income Share (Coefficient on the Right)")
+# there is a simpler way to do this in dplyr but I kept getting incorrect results
+# and order proved to be really important (line 198)
+slopes<-data.frame(country=1:14,spending_slopes=1:14,lorenz_slopes=1:14)
+slopes[1,1]<-"Australia"
+slopes[1,2]<-round(lm(data=(filter(data,country=="Australia")),
+                      spending~year)$coefficient[2],2)
+slopes[1,3]<-round(lm(data=(filter(data,country=="Australia")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[2,1]<-"Austria"
+slopes[2,2]<-round(lm(data=(filter(data,country=="Austria")),
+                      spending~year)$coefficient[2],2)
+slopes[2,3]<-round(lm(data=(filter(data,country=="Austria")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[3,1]<-"Belgium"
+slopes[3,2]<-round(lm(data=(filter(data,country=="Belgium")),
+                      spending~year)$coefficient[2],2)
+slopes[3,3]<-round(lm(data=(filter(data,country=="Belgium")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[4,1]<-"Denmark"
+slopes[4,2]<-round(lm(data=(filter(data,country=="Denmark")),
+                      spending~year)$coefficient[2],2)
+slopes[4,3]<-round(lm(data=(filter(data,country=="Denmark")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[5,1]<-"Finland"
+slopes[5,2]<-round(lm(data=(filter(data,country=="Finland")),
+                      spending~year)$coefficient[2],2)
+slopes[5,3]<-round(lm(data=(filter(data,country=="Finland")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[6,1]<-"Germany"
+slopes[6,2]<-round(lm(data=(filter(data,country=="Germany")),
+                      spending~year)$coefficient[2],2)
+slopes[6,3]<-round(lm(data=(filter(data,country=="Germany")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[7,1]<-"Ireland"
+slopes[7,2]<-round(lm(data=(filter(data,country=="Ireland")),
+                      spending~year)$coefficient[2],2)
+slopes[7,3]<-round(lm(data=(filter(data,country=="Ireland")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[8,1]<-"Italy"
+slopes[8,2]<-round(lm(data=(filter(data,country=="Italy")),
+                      spending~year)$coefficient[2],2)
+slopes[8,3]<-round(lm(data=(filter(data,country=="Italy")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[9,1]<-"Luxembourg"
+slopes[9,2]<-round(lm(data=(filter(data,country=="Luxembourg")),
+                      spending~year)$coefficient[2],2)
+slopes[9,3]<-round(lm(data=(filter(data,country=="Luxembourg")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[10,1]<-"Netherlands"
+slopes[10,2]<-round(lm(data=(filter(data,country=="Netherlands")),
+                      spending~year)$coefficient[2],2)
+slopes[10,3]<-round(lm(data=(filter(data,country=="Netherlands")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[11,1]<-"Norway"
+slopes[11,2]<-round(lm(data=(filter(data,country=="Norway")),
+                      spending~year)$coefficient[2],2)
+slopes[11,3]<-round(lm(data=(filter(data,country=="Norway")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[12,1]<-"Spain"
+slopes[12,2]<-round(lm(data=(filter(data,country=="Spain")),
+                      spending~year)$coefficient[2],2)
+slopes[12,3]<-round(lm(data=(filter(data,country=="Spain")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[13,1]<-"United Kingdom"
+slopes[13,2]<-round(lm(data=(filter(data,country=="United Kingdom")),
+                      spending~year)$coefficient[2],2)
+slopes[13,3]<-round(lm(data=(filter(data,country=="United Kingdom")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes[14,1]<-"United States"
+slopes[14,2]<-round(lm(data=(filter(data,country=="United States")),
+                      spending~year)$coefficient[2],2)
+slopes[14,3]<-round(lm(data=(filter(data,country=="United States")),
+                      lorenz_90~year)$coefficient[2],2)
+slopes<-data.frame(country = rep(slopes$country, 41),
+                   spending_slopes = rep(slopes$spending_slopes, 41),
+                   lorenz_slopes = rep(slopes$lorenz_slopes, 41))
+slopes<-slopes[order(slopes$country),]
+figure1<-figure1 + geom_text(aes(x=year,y=lorenz_90),
+                               x=1995,y=55,label=slopes$spending_slopes)
+figure1<-figure1 + geom_text(aes(x=year,y=lorenz_90),
+                               x=2005,y=55,label=slopes$lorenz_slopes)
 ```
 ```{r include=FALSE}
-summary(lm(spending~lorenz+as.factor(country)+as.factor(year),data))
+summary(lm(spending~lorenz_90+as.factor(country)+as.factor(year),data))
 ```

@@ -1,0 +1,903 @@
+"country","lorenz_90","year"
+"Australia",NA,1980
+"Austria",NA,1980
+"Belgium",NA,1980
+"Czech Republic",NA,1980
+"Denmark",NA,1980
+"Finland",NA,1980
+"France",NA,1980
+"Germany",72.67,1980
+"Ireland",NA,1980
+"Italy",NA,1980
+"South Korea",NA,1980
+"Luxembourg",NA,1980
+"Mexico",NA,1980
+"Netherlands",NA,1980
+"Norway",76.56,1980
+"Poland",NA,1980
+"Russia",NA,1980
+"Slovakia",NA,1980
+"Spain",NA,1980
+"Switzerland",69.64,1980
+"United Kingdom",75.18,1980
+"United States",72.53,1980
+"Australia",NA,1981
+"Austria",NA,1981
+"Belgium",NA,1981
+"Czech Republic",NA,1981
+"Denmark",NA,1981
+"Finland",NA,1981
+"France",NA,1981
+"Germany",73.54,1981
+"Ireland",NA,1981
+"Italy",NA,1981
+"South Korea",NA,1981
+"Luxembourg",NA,1981
+"Mexico",NA,1981
+"Netherlands",71.77,1981
+"Norway",76.56,1981
+"Poland",NA,1981
+"Russia",NA,1981
+"Slovakia",NA,1981
+"Spain",NA,1981
+"Switzerland",69.64,1981
+"United Kingdom",74.15,1981
+"United States",72.06,1981
+"Australia",NA,1982
+"Austria",NA,1982
+"Belgium",NA,1982
+"Czech Republic",NA,1982
+"Denmark",NA,1982
+"Finland",NA,1982
+"France",NA,1982
+"Germany",73.54,1982
+"Ireland",NA,1982
+"Italy",NA,1982
+"South Korea",NA,1982
+"Luxembourg",NA,1982
+"Mexico",NA,1982
+"Netherlands",71.77,1982
+"Norway",NA,1982
+"Poland",NA,1982
+"Russia",NA,1982
+"Slovakia",NA,1982
+"Spain",NA,1982
+"Switzerland",69.64,1982
+"United Kingdom",73.21,1982
+"United States",71.14,1982
+"Australia",NA,1983
+"Austria",NA,1983
+"Belgium",NA,1983
+"Czech Republic",NA,1983
+"Denmark",NA,1983
+"Finland",NA,1983
+"France",NA,1983
+"Germany",73.54,1983
+"Ireland",NA,1983
+"Italy",NA,1983
+"South Korea",NA,1983
+"Luxembourg",NA,1983
+"Mexico",NA,1983
+"Netherlands",71.77,1983
+"Norway",NA,1983
+"Poland",NA,1983
+"Russia",NA,1983
+"Slovakia",NA,1983
+"Spain",NA,1983
+"Switzerland",69.64,1983
+"United Kingdom",73.21,1983
+"United States",70.96,1983
+"Australia",NA,1984
+"Austria",NA,1984
+"Belgium",NA,1984
+"Czech Republic",NA,1984
+"Denmark",NA,1984
+"Finland",NA,1984
+"France",NA,1984
+"Germany",73.25,1984
+"Ireland",NA,1984
+"Italy",NA,1984
+"South Korea",NA,1984
+"Luxembourg",NA,1984
+"Mexico",NA,1984
+"Netherlands",71.77,1984
+"Norway",77.37,1984
+"Poland",NA,1984
+"Russia",NA,1984
+"Slovakia",NA,1984
+"Spain",NA,1984
+"Switzerland",69.64,1984
+"United Kingdom",73.6,1984
+"United States",71.03,1984
+"Australia",NA,1985
+"Austria",NA,1985
+"Belgium",NA,1985
+"Czech Republic",NA,1985
+"Denmark",NA,1985
+"Finland",77.31,1985
+"France",NA,1985
+"Germany",73.25,1985
+"Ireland",68.16,1985
+"Italy",NA,1985
+"South Korea",NA,1985
+"Luxembourg",NA,1985
+"Mexico",NA,1985
+"Netherlands",72.25,1985
+"Norway",77.37,1985
+"Poland",NA,1985
+"Russia",NA,1985
+"Slovakia",NA,1985
+"Spain",NA,1985
+"Switzerland",NA,1985
+"United Kingdom",72.63,1985
+"United States",70.55,1985
+"Australia",NA,1986
+"Austria",NA,1986
+"Belgium",NA,1986
+"Czech Republic",NA,1986
+"Denmark",NA,1986
+"Finland",77.31,1986
+"France",NA,1986
+"Germany",73.99,1986
+"Ireland",68.16,1986
+"Italy",NA,1986
+"South Korea",NA,1986
+"Luxembourg",NA,1986
+"Mexico",NA,1986
+"Netherlands",72.25,1986
+"Norway",77.37,1986
+"Poland",NA,1986
+"Russia",NA,1986
+"Slovakia",NA,1986
+"Spain",NA,1986
+"Switzerland",NA,1986
+"United Kingdom",70.02,1986
+"United States",70.34,1986
+"Australia",72.29,1987
+"Austria",NA,1987
+"Belgium",NA,1987
+"Czech Republic",NA,1987
+"Denmark",NA,1987
+"Finland",77.31,1987
+"France",NA,1987
+"Germany",73.29,1987
+"Ireland",68.16,1987
+"Italy",NA,1987
+"South Korea",NA,1987
+"Luxembourg",NA,1987
+"Mexico",NA,1987
+"Netherlands",72.25,1987
+"Norway",77.37,1987
+"Poland",NA,1987
+"Russia",NA,1987
+"Slovakia",NA,1987
+"Spain",NA,1987
+"Switzerland",NA,1987
+"United Kingdom",70.02,1987
+"United States",70.44,1987
+"Australia",72.29,1988
+"Austria",NA,1988
+"Belgium",NA,1988
+"Czech Republic",NA,1988
+"Denmark",NA,1988
+"Finland",77.31,1988
+"France",NA,1988
+"Germany",72.75,1988
+"Ireland",68.16,1988
+"Italy",NA,1988
+"South Korea",NA,1988
+"Luxembourg",NA,1988
+"Mexico",NA,1988
+"Netherlands",72.25,1988
+"Norway",77.37,1988
+"Poland",NA,1988
+"Russia",NA,1988
+"Slovakia",NA,1988
+"Spain",NA,1988
+"Switzerland",NA,1988
+"United Kingdom",70.4,1988
+"United States",70.23,1988
+"Australia",72.29,1989
+"Austria",NA,1989
+"Belgium",NA,1989
+"Czech Republic",NA,1989
+"Denmark",NA,1989
+"Finland",77.19,1989
+"France",NA,1989
+"Germany",72.38,1989
+"Ireland",68.16,1989
+"Italy",NA,1989
+"South Korea",NA,1989
+"Luxembourg",NA,1989
+"Mexico",NA,1989
+"Netherlands",74.22,1989
+"Norway",75.65,1989
+"Poland",NA,1989
+"Russia",NA,1989
+"Slovakia",NA,1989
+"Spain",NA,1989
+"Switzerland",NA,1989
+"United Kingdom",71.85,1989
+"United States",69.55,1989
+"Australia",72.29,1990
+"Austria",NA,1990
+"Belgium",73.69,1990
+"Czech Republic",NA,1990
+"Denmark",NA,1990
+"Finland",77.19,1990
+"France",NA,1990
+"Germany",73.29,1990
+"Ireland",NA,1990
+"Italy",NA,1990
+"South Korea",NA,1990
+"Luxembourg",NA,1990
+"Mexico",NA,1990
+"Netherlands",74.22,1990
+"Norway",75.65,1990
+"Poland",NA,1990
+"Russia",NA,1990
+"Slovakia",NA,1990
+"Spain",NA,1990
+"Switzerland",72.23,1990
+"United Kingdom",70.11,1990
+"United States",69.84,1990
+"Australia",72.29,1991
+"Austria",NA,1991
+"Belgium",73.69,1991
+"Czech Republic",NA,1991
+"Denmark",NA,1991
+"Finland",77.19,1991
+"France",NA,1991
+"Germany",73.29,1991
+"Ireland",NA,1991
+"Italy",NA,1991
+"South Korea",NA,1991
+"Luxembourg",NA,1991
+"Mexico",NA,1991
+"Netherlands",74.22,1991
+"Norway",75.65,1991
+"Poland",NA,1991
+"Russia",NA,1991
+"Slovakia",NA,1991
+"Spain",NA,1991
+"Switzerland",72.23,1991
+"United Kingdom",70.11,1991
+"United States",69.84,1991
+"Australia",72.29,1992
+"Austria",NA,1992
+"Belgium",73.69,1992
+"Czech Republic",NA,1992
+"Denmark",NA,1992
+"Finland",77.19,1992
+"France",NA,1992
+"Germany",72.7,1992
+"Ireland",NA,1992
+"Italy",NA,1992
+"South Korea",NA,1992
+"Luxembourg",NA,1992
+"Mexico",NA,1992
+"Netherlands",74.22,1992
+"Norway",75.65,1992
+"Poland",NA,1992
+"Russia",NA,1992
+"Slovakia",NA,1992
+"Spain",NA,1992
+"Switzerland",72.23,1992
+"United Kingdom",70.29,1992
+"United States",69.98,1992
+"Australia",NA,1993
+"Austria",NA,1993
+"Belgium",73.69,1993
+"Czech Republic",NA,1993
+"Denmark",NA,1993
+"Finland",77.19,1993
+"France",NA,1993
+"Germany",72.76,1993
+"Ireland",NA,1993
+"Italy",NA,1993
+"South Korea",NA,1993
+"Luxembourg",NA,1993
+"Mexico",NA,1993
+"Netherlands",74.09,1993
+"Norway",75.65,1993
+"Poland",NA,1993
+"Russia",NA,1993
+"Slovakia",NA,1993
+"Spain",NA,1993
+"Switzerland",72.23,1993
+"United Kingdom",69.96,1993
+"United States",69.38,1993
+"Australia",70.92,1994
+"Austria",NA,1994
+"Belgium",73.69,1994
+"Czech Republic",NA,1994
+"Denmark",74.15,1994
+"Finland",74.44,1994
+"France",NA,1994
+"Germany",72.17,1994
+"Ireland",NA,1994
+"Italy",NA,1994
+"South Korea",NA,1994
+"Luxembourg",NA,1994
+"Mexico",NA,1994
+"Netherlands",74.09,1994
+"Norway",74.36,1994
+"Poland",NA,1994
+"Russia",NA,1994
+"Slovakia",NA,1994
+"Spain",NA,1994
+"Switzerland",72.23,1994
+"United Kingdom",68.03,1994
+"United States",66.8,1994
+"Australia",70.92,1995
+"Austria",NA,1995
+"Belgium",NA,1995
+"Czech Republic",NA,1995
+"Denmark",74.15,1995
+"Finland",74.44,1995
+"France",NA,1995
+"Germany",72,1995
+"Ireland",NA,1995
+"Italy",NA,1995
+"South Korea",NA,1995
+"Luxembourg",NA,1995
+"Mexico",NA,1995
+"Netherlands",74.09,1995
+"Norway",74.36,1995
+"Poland",NA,1995
+"Russia",NA,1995
+"Slovakia",NA,1995
+"Spain",NA,1995
+"Switzerland",NA,1995
+"United Kingdom",68.13,1995
+"United States",66.84,1995
+"Australia",70.92,1996
+"Austria",NA,1996
+"Belgium",NA,1996
+"Czech Republic",NA,1996
+"Denmark",74.15,1996
+"Finland",74.44,1996
+"France",NA,1996
+"Germany",71.92,1996
+"Ireland",NA,1996
+"Italy",NA,1996
+"South Korea",NA,1996
+"Luxembourg",NA,1996
+"Mexico",NA,1996
+"Netherlands",NA,1996
+"Norway",74.36,1996
+"Poland",NA,1996
+"Russia",NA,1996
+"Slovakia",NA,1996
+"Spain",NA,1996
+"Switzerland",NA,1996
+"United Kingdom",68.49,1996
+"United States",66.66,1996
+"Australia",70.92,1997
+"Austria",NA,1997
+"Belgium",NA,1997
+"Czech Republic",NA,1997
+"Denmark",74.15,1997
+"Finland",74.44,1997
+"France",NA,1997
+"Germany",71.83,1997
+"Ireland",NA,1997
+"Italy",NA,1997
+"South Korea",NA,1997
+"Luxembourg",NA,1997
+"Mexico",NA,1997
+"Netherlands",75.75,1997
+"Norway",74.36,1997
+"Poland",NA,1997
+"Russia",NA,1997
+"Slovakia",NA,1997
+"Spain",NA,1997
+"Switzerland",NA,1997
+"United Kingdom",68.45,1997
+"United States",66.32,1997
+"Australia",NA,1998
+"Austria",NA,1998
+"Belgium",NA,1998
+"Czech Republic",NA,1998
+"Denmark",74.39,1998
+"Finland",72.67,1998
+"France",NA,1998
+"Germany",71.68,1998
+"Ireland",NA,1998
+"Italy",NA,1998
+"South Korea",NA,1998
+"Luxembourg",NA,1998
+"Mexico",NA,1998
+"Netherlands",75.75,1998
+"Norway",72.2,1998
+"Poland",NA,1998
+"Russia",NA,1998
+"Slovakia",NA,1998
+"Spain",NA,1998
+"Switzerland",74.7,1998
+"United Kingdom",67.39,1998
+"United States",66.74,1998
+"Australia",69.84,1999
+"Austria",NA,1999
+"Belgium",NA,1999
+"Czech Republic",NA,1999
+"Denmark",74.39,1999
+"Finland",72.67,1999
+"France",NA,1999
+"Germany",70.99,1999
+"Ireland",NA,1999
+"Italy",NA,1999
+"South Korea",NA,1999
+"Luxembourg",NA,1999
+"Mexico",NA,1999
+"Netherlands",75.75,1999
+"Norway",72.2,1999
+"Poland",NA,1999
+"Russia",NA,1999
+"Slovakia",NA,1999
+"Spain",NA,1999
+"Switzerland",74.7,1999
+"United Kingdom",64.57,1999
+"United States",66.52,1999
+"Australia",69.84,2000
+"Austria",NA,2000
+"Belgium",NA,2000
+"Czech Republic",70.56,2000
+"Denmark",74.39,2000
+"Finland",72.67,2000
+"France",NA,2000
+"Germany",70.75,2000
+"Ireland",71.2,2000
+"Italy",NA,2000
+"South Korea",NA,2000
+"Luxembourg",70.28,2000
+"Mexico",NA,2000
+"Netherlands",75.75,2000
+"Norway",72.2,2000
+"Poland",NA,2000
+"Russia",NA,2000
+"Slovakia",NA,2000
+"Spain",NA,2000
+"Switzerland",74.7,2000
+"United Kingdom",64.57,2000
+"United States",66.27,2000
+"Australia",69.84,2001
+"Austria",71.52,2001
+"Belgium",71.75,2001
+"Czech Republic",70.56,2001
+"Denmark",74.39,2001
+"Finland",72.67,2001
+"France",NA,2001
+"Germany",68.7,2001
+"Ireland",71.2,2001
+"Italy",NA,2001
+"South Korea",NA,2001
+"Luxembourg",70.28,2001
+"Mexico",NA,2001
+"Netherlands",75.75,2001
+"Norway",72.2,2001
+"Poland",NA,2001
+"Russia",NA,2001
+"Slovakia",NA,2001
+"Spain",NA,2001
+"Switzerland",75.56,2001
+"United Kingdom",66.22,2001
+"United States",65.97,2001
+"Australia",70.83,2002
+"Austria",71.52,2002
+"Belgium",71.75,2002
+"Czech Republic",70.56,2002
+"Denmark",74.2,2002
+"Finland",72.05,2002
+"France",NA,2002
+"Germany",68.91,2002
+"Ireland",71.2,2002
+"Italy",NA,2002
+"South Korea",NA,2002
+"Luxembourg",70.28,2002
+"Mexico",NA,2002
+"Netherlands",70.86,2002
+"Norway",69.61,2002
+"Poland",NA,2002
+"Russia",NA,2002
+"Slovakia",71.41,2002
+"Spain",70.11,2002
+"Switzerland",75.56,2002
+"United Kingdom",67.78,2002
+"United States",66.56,2002
+"Australia",70.83,2003
+"Austria",71.52,2003
+"Belgium",71.75,2003
+"Czech Republic",70.06,2003
+"Denmark",74.2,2003
+"Finland",72.05,2003
+"France",NA,2003
+"Germany",68.41,2003
+"Ireland",67.78,2003
+"Italy",NA,2003
+"South Korea",NA,2003
+"Luxembourg",70.92,2003
+"Mexico",NA,2003
+"Netherlands",70.86,2003
+"Norway",69.61,2003
+"Poland",NA,2003
+"Russia",NA,2003
+"Slovakia",71.41,2003
+"Spain",70.11,2003
+"Switzerland",76.24,2003
+"United Kingdom",67.86,2003
+"United States",66.59,2003
+"Australia",70.37,2004
+"Austria",71.07,2004
+"Belgium",69.54,2004
+"Czech Republic",70.06,2004
+"Denmark",74.2,2004
+"Finland",72.05,2004
+"France",NA,2004
+"Germany",68.74,2004
+"Ireland",67.19,2004
+"Italy",NA,2004
+"South Korea",NA,2004
+"Luxembourg",70.99,2004
+"Mexico",NA,2004
+"Netherlands",70.86,2004
+"Norway",69.61,2004
+"Poland",NA,2004
+"Russia",NA,2004
+"Slovakia",71.41,2004
+"Spain",70.11,2004
+"Switzerland",76.24,2004
+"United Kingdom",67.71,2004
+"United States",66.34,2004
+"Australia",70.37,2005
+"Austria",71.62,2005
+"Belgium",70.01,2005
+"Czech Republic",70.06,2005
+"Denmark",74.2,2005
+"Finland",72.05,2005
+"France",NA,2005
+"Germany",67.37,2005
+"Ireland",67.27,2005
+"Italy",NA,2005
+"South Korea",NA,2005
+"Luxembourg",69.6,2005
+"Mexico",NA,2005
+"Netherlands",70.86,2005
+"Norway",69.61,2005
+"Poland",NA,2005
+"Russia",NA,2005
+"Slovakia",71.41,2005
+"Spain",70.49,2005
+"Switzerland",73.72,2005
+"United Kingdom",67.12,2005
+"United States",65.81,2005
+"Australia",68.57,2006
+"Austria",70.22,2006
+"Belgium",71.37,2006
+"Czech Republic",71.49,2006
+"Denmark",73.66,2006
+"Finland",73.33,2006
+"France",NA,2006
+"Germany",67.92,2006
+"Ireland",67.83,2006
+"Italy",NA,2006
+"South Korea",NA,2006
+"Luxembourg",70.12,2006
+"Mexico",NA,2006
+"Netherlands",71.42,2006
+"Norway",69.61,2006
+"Poland",NA,2006
+"Russia",NA,2006
+"Slovakia",74.25,2006
+"Spain",71.13,2006
+"Switzerland",73.72,2006
+"United Kingdom",66.62,2006
+"United States",65.81,2006
+"Australia",68.57,2007
+"Austria",69.28,2007
+"Belgium",70.98,2007
+"Czech Republic",71.49,2007
+"Denmark",73.66,2007
+"Finland",73.33,2007
+"France",NA,2007
+"Germany",67.5,2007
+"Ireland",67.12,2007
+"Italy",NA,2007
+"South Korea",NA,2007
+"Luxembourg",70.14,2007
+"Mexico",NA,2007
+"Netherlands",71.42,2007
+"Norway",NA,2007
+"Poland",NA,2007
+"Russia",NA,2007
+"Slovakia",74.25,2007
+"Spain",70.49,2007
+"Switzerland",72.81,2007
+"United Kingdom",68.65,2007
+"United States",66.78,2007
+"Australia",68.57,2008
+"Austria",68.8,2008
+"Belgium",72.4,2008
+"Czech Republic",71.49,2008
+"Denmark",73.66,2008
+"Finland",73.33,2008
+"France",NA,2008
+"Germany",67.94,2008
+"Ireland",67.03,2008
+"Italy",NA,2008
+"South Korea",NA,2008
+"Luxembourg",67.86,2008
+"Mexico",NA,2008
+"Netherlands",71.42,2008
+"Norway",72.11,2008
+"Poland",NA,2008
+"Russia",NA,2008
+"Slovakia",74.25,2008
+"Spain",69.48,2008
+"Switzerland",73.2,2008
+"United Kingdom",67.67,2008
+"United States",66.16,2008
+"Australia",69.53,2009
+"Austria",67.56,2009
+"Belgium",72.4,2009
+"Czech Republic",71.86,2009
+"Denmark",72.02,2009
+"Finland",74.08,2009
+"France",NA,2009
+"Germany",68.7,2009
+"Ireland",63.71,2009
+"Italy",NA,2009
+"South Korea",NA,2009
+"Luxembourg",69.39,2009
+"Mexico",NA,2009
+"Netherlands",73.44,2009
+"Norway",72.11,2009
+"Poland",NA,2009
+"Russia",NA,2009
+"Slovakia",73.26,2009
+"Spain",68.25,2009
+"Switzerland",73.54,2009
+"United Kingdom",66.67,2009
+"United States",65.61,2009
+"Australia",69.53,2010
+"Austria",68.97,2010
+"Belgium",72.4,2010
+"Czech Republic",71.86,2010
+"Denmark",72.02,2010
+"Finland",74.08,2010
+"France",NA,2010
+"Germany",68.73,2010
+"Ireland",64.41,2010
+"Italy",NA,2010
+"South Korea",NA,2010
+"Luxembourg",70.66,2010
+"Mexico",NA,2010
+"Netherlands",73.44,2010
+"Norway",72.11,2010
+"Poland",NA,2010
+"Russia",NA,2010
+"Slovakia",73.26,2010
+"Spain",66.94,2010
+"Switzerland",73.14,2010
+"United Kingdom",66.67,2010
+"United States",66.02,2010
+"Australia",69.53,2011
+"Austria",68.91,2011
+"Belgium",NA,2011
+"Czech Republic",71.86,2011
+"Denmark",72.02,2011
+"Finland",74.08,2011
+"France",NA,2011
+"Germany",68.11,2011
+"Ireland",65.69,2011
+"Italy",NA,2011
+"South Korea",NA,2011
+"Luxembourg",69.61,2011
+"Mexico",NA,2011
+"Netherlands",73.44,2011
+"Norway",72.11,2011
+"Poland",NA,2011
+"Russia",NA,2011
+"Slovakia",73.26,2011
+"Spain",67.29,2011
+"Switzerland",74.01,2011
+"United Kingdom",67.58,2011
+"United States",64.86,2011
+"Australia",67.52,2012
+"Austria",69.25,2012
+"Belgium",NA,2012
+"Czech Republic",70.97,2012
+"Denmark",72.22,2012
+"Finland",73.96,2012
+"France",NA,2012
+"Germany",67.86,2012
+"Ireland",63.87,2012
+"Italy",65.04,2012
+"South Korea",NA,2012
+"Luxembourg",67.64,2012
+"Mexico",NA,2012
+"Netherlands",72.29,2012
+"Norway",72.37,2012
+"Poland",NA,2012
+"Russia",NA,2012
+"Slovakia",72.79,2012
+"Spain",67.33,2012
+"Switzerland",73.72,2012
+"United Kingdom",67.58,2012
+"United States",65.09,2012
+"Australia",67.52,2013
+"Austria",68.88,2013
+"Belgium",NA,2013
+"Czech Republic",70.97,2013
+"Denmark",72.22,2013
+"Finland",73.96,2013
+"France",NA,2013
+"Germany",67.3,2013
+"Ireland",63.97,2013
+"Italy",65.04,2013
+"South Korea",NA,2013
+"Luxembourg",69.54,2013
+"Mexico",NA,2013
+"Netherlands",72.29,2013
+"Norway",72.37,2013
+"Poland",NA,2013
+"Russia",NA,2013
+"Slovakia",72.79,2013
+"Spain",66.92,2013
+"Switzerland",72.54,2013
+"United Kingdom",69.24,2013
+"United States",65.24,2013
+"Australia",67.52,2014
+"Austria",68.99,2014
+"Belgium",NA,2014
+"Czech Republic",70.97,2014
+"Denmark",72.22,2014
+"Finland",73.96,2014
+"France",NA,2014
+"Germany",68.7,2014
+"Ireland",66,2014
+"Italy",65.04,2014
+"South Korea",NA,2014
+"Luxembourg",69.45,2014
+"Mexico",NA,2014
+"Netherlands",71.65,2014
+"Norway",72.37,2014
+"Poland",NA,2014
+"Russia",NA,2014
+"Slovakia",75.67,2014
+"Spain",66.51,2014
+"Switzerland",72.74,2014
+"United Kingdom",69.24,2014
+"United States",65.26,2014
+"Australia",69.24,2015
+"Austria",68.9,2015
+"Belgium",NA,2015
+"Czech Republic",72.5,2015
+"Denmark",71.73,2015
+"Finland",73.21,2015
+"France",NA,2015
+"Germany",67.7,2015
+"Ireland",65.2,2015
+"Italy",63.72,2015
+"South Korea",NA,2015
+"Luxembourg",70.54,2015
+"Mexico",NA,2015
+"Netherlands",71.65,2015
+"Norway",71.19,2015
+"Poland",NA,2015
+"Russia",NA,2015
+"Slovakia",75.43,2015
+"Spain",66.33,2015
+"Switzerland",72.55,2015
+"United Kingdom",69.41,2015
+"United States",65.25,2015
+"Australia",68.42,2016
+"Austria",69.23,2016
+"Belgium",NA,2016
+"Czech Republic",NA,2016
+"Denmark",NA,2016
+"Finland",NA,2016
+"France",NA,2016
+"Germany",67.31,2016
+"Ireland",68.2,2016
+"Italy",NA,2016
+"South Korea",NA,2016
+"Luxembourg",68.93,2016
+"Mexico",NA,2016
+"Netherlands",72.1,2016
+"Norway",70.84,2016
+"Poland",NA,2016
+"Russia",NA,2016
+"Slovakia",77.12,2016
+"Spain",68.65,2016
+"Switzerland",72.19,2016
+"United Kingdom",69.27,2016
+"United States",63.94,2016
+"Australia",68.42,2017
+"Austria",69.81,2017
+"Belgium",NA,2017
+"Czech Republic",72.5,2017
+"Denmark",71.73,2017
+"Finland",73.21,2017
+"France",NA,2017
+"Germany",67.86,2017
+"Ireland",64.51,2017
+"Italy",63.72,2017
+"South Korea",NA,2017
+"Luxembourg",69.41,2017
+"Mexico",NA,2017
+"Netherlands",71.24,2017
+"Norway",71.19,2017
+"Poland",NA,2017
+"Russia",NA,2017
+"Slovakia",77.29,2017
+"Spain",67.65,2017
+"Switzerland",72.69,2017
+"United Kingdom",69.41,2017
+"United States",65.19,2017
+"Australia",68.42,2018
+"Austria",68.9,2018
+"Belgium",NA,2018
+"Czech Republic",72.5,2018
+"Denmark",71.73,2018
+"Finland",73.21,2018
+"France",NA,2018
+"Germany",67.25,2018
+"Ireland",66.46,2018
+"Italy",63.72,2018
+"South Korea",NA,2018
+"Luxembourg",68.93,2018
+"Mexico",NA,2018
+"Netherlands",72.1,2018
+"Norway",71.6,2018
+"Poland",NA,2018
+"Russia",NA,2018
+"Slovakia",77.12,2018
+"Spain",67.39,2018
+"Switzerland",72.19,2018
+"United Kingdom",69.41,2018
+"United States",64.71,2018
+"Australia",68.42,2019
+"Austria",69.23,2019
+"Belgium",NA,2019
+"Czech Republic",NA,2019
+"Denmark",NA,2019
+"Finland",NA,2019
+"France",NA,2019
+"Germany",67.31,2019
+"Ireland",68.2,2019
+"Italy",NA,2019
+"South Korea",NA,2019
+"Luxembourg",68.93,2019
+"Mexico",NA,2019
+"Netherlands",72.1,2019
+"Norway",71.6,2019
+"Poland",NA,2019
+"Russia",NA,2019
+"Slovakia",77.12,2019
+"Spain",68.65,2019
+"Switzerland",72.19,2019
+"United Kingdom",69.27,2019
+"United States",64.68,2019
+"Australia",68.42,2020
+"Austria",69.23,2020
+"Belgium",NA,2020
+"Czech Republic",NA,2020
+"Denmark",NA,2020
+"Finland",NA,2020
+"France",NA,2020
+"Germany",67.31,2020
+"Ireland",68.2,2020
+"Italy",NA,2020
+"South Korea",NA,2020
+"Luxembourg",68.93,2020
+"Mexico",NA,2020
+"Netherlands",72.1,2020
+"Norway",70.84,2020
+"Poland",NA,2020
+"Russia",NA,2020
+"Slovakia",77.12,2020
+"Spain",68.65,2020
+"Switzerland",72.19,2020
+"United Kingdom",69.27,2020
+"United States",63.94,2020
