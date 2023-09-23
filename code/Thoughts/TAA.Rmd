@@ -21,8 +21,7 @@ taa<-taa %>%
   rename(state=State,year=`Grant Year`,assistance=`Allocated Funds`) %>%
   group_by(state,year) %>%
   summarize(assistance=sum(assistance))
-data<-left_join(employment,taa) %>%
-  
+data<-left_join(employment,taa)
 ```
 ```{r include=FALSE}
 figure1<-data %>%

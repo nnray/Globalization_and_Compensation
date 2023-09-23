@@ -1,0 +1,127 @@
+---
+title: "September_16"
+author: "Nicholas Ray"
+date: "2023-09-16"
+output: pdf_document
+---
+```{r libraries, message=FALSE}
+library(here);library(tidyverse)
+```
+```{r data}
+#social spending data from OECD
+##https://stats.oecd.org/Index.aspx?datasetcode=SOCX_AGG
+spending<-read.csv(
+  unzip(here("data","spending","SOCX.zip"),
+  "SOCX_AGG_16062023181903485.csv")
+)
+#Carson et al.'s (2019) overall incumbency advantage measure
+##https://dataverse-harvard-edu.srv-proxy1.library.tamu.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SCFL3L
+incumbency<-read.csv(
+  here("data","carson_etal","overall.csv")
+)
+#trade (each percentage of GDP), with openness being exports+imports
+##https://data.oecd.org/trade/trade-in-goods-and-services.htm
+exports<-read.csv(
+  here("data","trade","DP_LIVE_16092023182304062.csv")
+)
+imports<-read.csv(
+  here("data","trade","DP_LIVE_16092023182317437.csv")
+)
+```
+```{r cleaning}
+spending<-spending %>%
+  filter(Country=="United States") %>%
+  rename(country=Country,year=Year) %>%
+  select(country,year,Value,Source) %>%
+  pivot_wider(names_from = Source,values_from = Value) %>%
+  rename(public=Public,private=`Private (Mandatory and Voluntary)`) %>%
+  mutate(total=public+private) %>% 
+  select(country,year,total,public,private)
+exports<-exports %>%
+  rename(country=LOCATION,year=TIME,exports=Value) %>%
+  filter(country=="USA") %>%
+  select(year,exports)
+imports<-imports %>%
+  rename(country=LOCATION,year=TIME,imports=Value) %>%
+  filter(country=="USA") %>%
+  select(year,imports)
+incumbency<-incumbency %>%
+  filter(year>"1979")
+data<-spending %>%
+  full_join(.,exports,by=c("year")) %>%
+  full_join(.,imports,by=c("year")) %>%
+  full_join(.,incumbency,by=c("year")) %>%
+  mutate(openness=exports+imports)
+```
+```{r plots, warning=FALSE}
+library(ggpubr)
+advantage<-ggplot(data,aes(x=year,y=incumbency))+
+  geom_point()+
+  stat_smooth(method = "loess",formula=y~x)+
+  labs(title="Overall Incumbency Advantage (Carson et al. 2019)",
+       y="Percentage (of Voteshare)",x="Year")
+openness<-ggplot(data,aes(x=year,y=openness))+
+  geom_point()+
+  stat_smooth(method = "loess",formula=y~x)+
+  labs(title="Trade Openness ((Exports+Imports)/GDP)",
+       y="Percentage (of GDP)",x="Year")
+spending<-ggplot(data,aes(x=year,y=total))+
+  geom_point()+
+  stat_smooth(method = "loess",formula=y~x)+
+  labs(title="Total Social Spending (Public+Private)",
+       y="Percentage (of GDP)",x="Year")
+figure1<-ggarrange(advantage,openness,spending)
+```
+```{r basic_analysis}
+lm(data$openness~data$year) %>%
+  summary()
+lm(data$total~data$year) %>%
+  summary()
+plot(data$year,1/(data$openness/data$total))
+lm(data$openness~data$total) %>%
+  summary()
+```
+```{r advanced_analysis, eval=FALSE, include=FALSE}
+#########################################################
+#checking for stationarity
+#total spending (not stationary, even with trend)
+library(urca)
+summary(
+  ur.df(data$total,type="trend")
+)
+library(tseries)
+adf.test(
+  data$total-mean(data$total)
+)
+adf.test(
+  lm(total~year,data)$residuals
+)
+#openness (not trend-stationary)
+adf.test(
+  data$openness
+)
+summary(
+  ur.df(data$openness,type="trend")
+)
+#incumbency (not trend-stationary)
+adf.test(
+  na.omit(data$incumbency)
+)
+#########################################################
+#differencing variables
+incumbency<-data %>%
+  drop_na() %>%
+  select(year,incumbency)
+incumbency$incumbency_diff<-incumbency$incumbency-
+  dplyr::lag(incumbency$incumbency)
+incumbency<-select(incumbency,year,incumbency_diff)
+data<-full_join(data,incumbency,by=c("year"))
+data<-mutate(data,
+             total_diff=total-dplyr::lag(total),
+             openness_diff=openness-dplyr::lag(openness))
+model<-lm(incumbency_diff~openness_diff+total_diff+
+            (openness_diff*total_diff),data)
+summary(ur.df(model$residuals))
+library(bayesforecast)
+ggacf(model$residuals)
+```
